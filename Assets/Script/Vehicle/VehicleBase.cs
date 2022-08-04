@@ -8,11 +8,13 @@ public class VehicleBase : MonoBehaviour
 {
     public StateMachine<VehicleBase> stateMachine { get { return m_stateMachine; } }
     protected StateMachine<VehicleBase> m_stateMachine;
+    public Animator anim;
     public virtual void Awake()
     {
         m_stateMachine = new StateMachine<VehicleBase>(this);
         m_stateMachine.ChangeState(VehicleIdle.instance);
         m_stateMachine.SetcurrentState(VehicleIdle.instance);
+        anim = GetComponent<Animator>();
     }
     public VehicleState vehicleState;
     VehicleState currentState;
@@ -50,6 +52,13 @@ public class VehicleBase : MonoBehaviour
                     stateMachine.ChangeState(VehicleCarryRotageAffterMove.instance);
                 }
                 break;
+            case VehicleState.OnLand:
+                if (currentState != vehicleState)
+                {
+                    currentState = vehicleState;
+                    stateMachine.ChangeState(VehicleOnland.instance);
+                }
+                break;
             default:
                 break;
         }
@@ -80,6 +89,9 @@ public class VehicleBase : MonoBehaviour
     public virtual void LandingExecute() { }
     public virtual void LandingEnd() { }
     public virtual void ChangeLandingPad(LandingPad landingPadChange, LanchPad lanchPad) { }
+    public virtual void OnlandEnter() { }
+    public virtual void OnlandExecute() { }
+    public virtual void OnlandEnd() { }
     #endregion
 
     #region CarryVehicle
@@ -175,5 +187,30 @@ public class VehicleLanding : State<VehicleBase>
     public override void End(VehicleBase go)
     {
         go.LandingEnd();
+    }
+}
+public class VehicleOnland : State<VehicleBase>
+{
+    private static VehicleOnland m_Instance;
+    public static VehicleOnland instance
+    {
+        get
+        {
+            if (m_Instance == null)
+                m_Instance = new VehicleOnland();
+            return m_Instance;
+        }
+    }
+    public override void Enter(VehicleBase go)
+    {
+        go.OnlandEnter();
+    }
+    public override void Execute(VehicleBase go)
+    {
+        go.OnlandExecute();
+    }
+    public override void End(VehicleBase go)
+    {
+        go.OnlandEnd();
     }
 }

@@ -8,14 +8,9 @@ public class VehicleCarry : VehicleBase
 {
     public Transform takePlace;
     public Transform vehicleTake;
-    Animator anim;
+    
     UnityAction actionDone;
     public WaitingPoint myWaitingPoint;
-    public override void Awake()
-    {
-        base.Awake();
-        anim = GetComponent<Animator>();
-    }
     public override void IdleEnter()
     {
     }
