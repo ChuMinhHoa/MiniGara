@@ -1,23 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using UnityEngine.Events;
 
 public class VehicleBroke : VehicleBase
 {
+    [Header("Room")]
+    [Header("===========VEHICLE BROKE==============")]
     public LandingPad myLandingPad;
     public LanchPad myLanchPad;
-
+    public TakeOffRoom myTakeOffRoom;
+    public BrokenRoom myBrokenRoom;
+    [Header("Vector")]
     public Vector3 pointLanding;
     public Vector3 offset;
-    public float speed;
-    public float smooth;
+    Vector3 vel;
+    Vector3 startPoint;
+    [Header("Transform And GameObject")]
     [SerializeField] Transform bootersTransform;
     [SerializeField] GameObject bootersVFX;
-    Vector3 vel;
+    [Header("Other")]
+    public float speed;
+    public float smooth;
+    public AnimationCurve curveTakeOff;
+    bool canTakeOffNow;
+    float timeCurve;
+    UnityAction actionDone;
     public override void IdleEnter()
     {
         anim.Play("Idle");
     }
+    #region Move
     public override void MoveEnter()
     {
         vel = Vector3.zero;
@@ -45,6 +59,8 @@ public class VehicleBroke : VehicleBase
     public override void MoveEnd()
     {
         base.MoveEnd();
+        if (actionDone != null)
+            actionDone();
     }
     public override void ChangeTargetMove(Vector3 targetMove, Vector3 landingPointChange)
     {
@@ -52,6 +68,14 @@ public class VehicleBroke : VehicleBase
         pointLanding = landingPointChange;
         vehicleState = VehicleState.Move;
     }
+    public override void ChangeTargetMove(Vector3 targetMove, UnityAction moveDoneAction = null)
+    {
+        targetToMove = targetMove;
+        vehicleState = VehicleState.Move;
+        actionDone = moveDoneAction;
+    }
+    #endregion
+    #region Landing
     public override void LandingEnter()
     {
         vel = Vector3.zero;
@@ -70,9 +94,7 @@ public class VehicleBroke : VehicleBase
         }
         transform.position = Vector3.SmoothDamp(transform.position, pointLanding + offset, ref vel, smooth);
         if (Vector3.Distance(transform.position, pointLanding + offset) <= 0.1f)
-        {
             vehicleState = VehicleState.OnLand;
-        }
     }
     public override void LandingEnd()
     {
@@ -86,5 +108,41 @@ public class VehicleBroke : VehicleBase
     {
         myLandingPad = landingPadChange;
         myLanchPad = lanchPad;
+    }
+    #endregion
+    #region TakeOff
+    public override void TakeOffEnter()
+    {
+        anim.Play("PopUpPrepare");
+        canTakeOffNow = false;
+        StartCoroutine(IE_WaitingForCanPopUp());
+        targetToMove = myTakeOffRoom.pointStartFly.position;
+        timeCurve = 0f;
+        startPoint = transform.position;
+    }
+    IEnumerator IE_WaitingForCanPopUp() {
+        yield return new WaitForSeconds(1f);
+        canTakeOffNow = true;
+        anim.Play("PopUp");
+    }
+    public override void TakeOffExecute()
+    {
+        if (canTakeOffNow)
+        {
+            if (timeCurve <= curveTakeOff.keys[curveTakeOff.length - 1].time)
+            {
+                transform.position = Vector3.Lerp(startPoint, targetToMove, curveTakeOff.Evaluate(timeCurve));
+                timeCurve += Time.deltaTime;
+            }
+            else {
+                canTakeOffNow = false;
+                ChangeTargetMove(myBrokenRoom.vehicleFixedGo.position, DestroySelf);
+            }
+        }
+    }
+    #endregion
+    void DestroySelf() {
+        //myBrokenRoom.RemoveVehicleBroke(this);
+        Destroy(gameObject); 
     }
 }

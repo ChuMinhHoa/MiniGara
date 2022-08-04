@@ -13,11 +13,14 @@ public class BrokenRoom : RoomManagerBase
     int amountSpawned = 0;
     bool timeToSpawn;
     bool spawnedDone;
+    public Transform vehicleFixedGo;
+    public Transform GetFixedGo() { return vehicleFixedGo; }
     public void SpawnBrokeVehicle() {
         if (timeCoolDown <= 0 && !spawnedDone)
         {
             VehicleBroke newVehicleBroke = Instantiate(roomPrefab, spawnRoomPoints[amountSpawned].position, Quaternion.identity, roomParent).GetComponent<VehicleBroke>();
             vehicleNeedRepair.Add(newVehicleBroke);
+            newVehicleBroke.myBrokenRoom = this;
             amountSpawned += 1;
             timeCoolDown = .25f;
         }
@@ -46,7 +49,7 @@ public class BrokenRoom : RoomManagerBase
                 GameManager.instance.landingPadManager.lanchPads[indexOfLanchPad].ChangePickUp(vehicleBroke.transform);
                 vehicleBroke.ChangeLandingPad(freeLanding, GameManager.instance.landingPadManager.lanchPads[indexOfLanchPad]);
                 vehicleBroke.ChangeTargetMove(freeLanding.landingStartPosition.position, freeLanding.landingEndPosition.position);
-                vehicleNeedRepair.Remove(vehicleBroke);
+                RemoveVehicleBroke(vehicleBroke);
             }
         }
         if (timeToSpawn)
@@ -64,6 +67,9 @@ public class BrokenRoom : RoomManagerBase
     public void RemoveVehicleBroke(VehicleBroke vehicleRemove) {
         vehicleNeedRepair.Remove(vehicleRemove);
         if (vehicleNeedRepair.Count == 0)
+        {
             spawnedDone = false;
+            amountSpawned = 0;
+        }
     }
 }

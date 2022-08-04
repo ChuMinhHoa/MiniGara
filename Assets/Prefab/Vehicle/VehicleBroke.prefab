@@ -588,6 +588,31 @@ MonoBehaviour:
   smooth: 1
   bootersTransform: {fileID: 1055450469}
   bootersVFX: {fileID: 4158087529187871719}
+  myTakeOffRoom: {fileID: 0}
+  curveTakeOff:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0041656494
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.2830179
+      outSlope: 3.2830179
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04184098
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &6122091128166391861
 Animator:
   serializedVersion: 3

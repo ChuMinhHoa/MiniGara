@@ -189,6 +189,7 @@ MonoBehaviour:
   pointVehicleCarryDrop: {fileID: 6886329358307673015}
   pointElevatorTake: {fileID: 6886329357833421199}
   pointElevatorDrop: {fileID: 6886329356642121348}
+  pointStartFly: {fileID: 6886329356791266867}
   able: 1
   state: 0
   animCurve:

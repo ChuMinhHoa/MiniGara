@@ -10,12 +10,18 @@ public class TakeOffRoom : BaseRoom
     public Transform pointVehicleCarryDrop;
     public Transform pointElevatorTake;
     public Transform pointElevatorDrop;
+    public Transform pointStartFly;
     public bool able;
     VehicleCarry vehicleOnProgrees;
     protected StateMachine<TakeOffRoom> m_StateMachine;
     public StateMachine<TakeOffRoom> stateMachine { get { return m_StateMachine; } }
     public TakeOffRoomState state;
     TakeOffRoomState currentState;
+    Transform vehicleBroke;
+    public AnimationCurve animCurve;
+    float timeCurve;
+    Vector3 startPoint;
+    Vector3 endPoint;
     private void Awake()
     {
         m_StateMachine = new StateMachine<TakeOffRoom>(this);
@@ -107,11 +113,7 @@ public class TakeOffRoom : BaseRoom
     public void IdleEnter() { }
     public void IdleExecute() { }
     public void IdleEnd() { }
-    Transform vehicleBroke;
-    public AnimationCurve animCurve;
-    float timeCurve;
-    Vector3 startPoint;
-    Vector3 endPoint;
+    
     public void ChangeBrokeEnter() {
         timeCurve = 0;
         startPoint = elevatorTransform.position;
@@ -166,11 +168,14 @@ public class TakeOffRoom : BaseRoom
             return;
         }
         vehicleBroke.parent = null;
+        VehicleBroke vehicleBrokeCompo = vehicleBroke.GetComponent<VehicleBroke>();
+        vehicleBrokeCompo.myTakeOffRoom = this;
+        vehicleBrokeCompo.vehicleState = VehicleState.TakeOff;
         state = TakeOffRoomState.Idle;
     }
     public void DropEnd() {
-        
         able = true;
+        vehicleBroke = null;
     }
 }
 public class Idle : State<TakeOffRoom> {

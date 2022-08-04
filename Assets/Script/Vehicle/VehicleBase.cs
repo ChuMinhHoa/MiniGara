@@ -59,6 +59,13 @@ public class VehicleBase : MonoBehaviour
                     stateMachine.ChangeState(VehicleOnland.instance);
                 }
                 break;
+            case VehicleState.TakeOff:
+                if (currentState != vehicleState)
+                {
+                    currentState = vehicleState;
+                    stateMachine.ChangeState(VehicleTakeOff.instance);
+                }
+                break;
             default:
                 break;
         }
@@ -92,6 +99,9 @@ public class VehicleBase : MonoBehaviour
     public virtual void OnlandEnter() { }
     public virtual void OnlandExecute() { }
     public virtual void OnlandEnd() { }
+    public virtual void TakeOffEnter() { }
+    public virtual void TakeOffExecute() { }
+    public virtual void TakeOffEnd() { }
     #endregion
 
     #region CarryVehicle
@@ -212,5 +222,28 @@ public class VehicleOnland : State<VehicleBase>
     public override void End(VehicleBase go)
     {
         go.OnlandEnd();
+    }
+}
+public class VehicleTakeOff : State<VehicleBase> {
+    private static VehicleTakeOff m_Instance;
+    public static VehicleTakeOff instance
+    {
+        get {
+            if (m_Instance == null)
+                m_Instance = new VehicleTakeOff();
+            return m_Instance;
+        }
+    }
+    public override void Enter(VehicleBase go)
+    {
+        go.TakeOffEnter();
+    }
+    public override void Execute(VehicleBase go)
+    {
+        go.TakeOffExecute();
+    }
+    public override void End(VehicleBase go)
+    {
+        go.TakeOffEnd();
     }
 }
