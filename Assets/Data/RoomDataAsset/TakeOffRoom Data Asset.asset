@@ -12,4 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f20dd3abdce25d24392304ca67969965, type: 3}
   m_Name: TakeOffRoom Data Asset
   m_EditorClassIdentifier: 
-  datas: []
+  datas:
+  - name: LED
+    type: 1
+    models3D:
+    - {fileID: 1576825037052917044, guid: 67476e8accbd0a944bb3e4ce21117d17, type: 3}
+    - {fileID: 746812769183836976, guid: 52a39964a46b8c047966aa4ad813a66f, type: 3}
+    - {fileID: 9160839904767511294, guid: 4f3bc766b3f133b4a806906a894c4afe, type: 3}
+    upgradePrices: 
+    sprUI: {fileID: 0}
+  - name: Elevator
+    type: 0
+    models3D:
+    - {fileID: 3679531298002338653, guid: 8f1c73f35629596439d23e70b836e476, type: 3}
+    upgradePrices: 00000000
+    sprUI: {fileID: 0}

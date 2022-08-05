@@ -4,24 +4,29 @@ using UnityEngine;
 
 public class House : BaseRoom<HouseModelType>
 {
+    protected StateMachine<House> m_Statemachine;
+    public StateMachine<House> stateMachine;
+    [Header("WORKER")]
+    [Header("================HOUSE=================")]
     public List<Worker> workers;
     public int maxAmountWorker = 2;
     int currentAmountWorker = 1;
+    [Header("TRANSFORM")]
     public Transform pointCallSleep;
     public Transform pointOpenDoor;
     public Transform window;
     public Transform sofarPoint;
     public Transform doorRotage;
+    [Header("QUATERNION")]
     public Quaternion rotageDoor;
     public Quaternion rotageWindow;
     Quaternion defaultRotageDoor;
     Quaternion defaultRotageWindow;
+    [Header("CURVE")]
     public AnimationCurve rotageCurve;
     float timeRotage;
     public GameObject workerPrefab;
-
-    protected StateMachine<House> m_Statemachine;
-    public StateMachine<House> stateMachine;
+    
 
     private void Awake()
     {

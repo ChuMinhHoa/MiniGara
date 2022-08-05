@@ -12,4 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e9fa34dfb42214eace82d08f6b1838, type: 3}
   m_Name: HouseRoom Data Asset
   m_EditorClassIdentifier: 
-  datas: []
+  datas:
+  - name: Bed
+    type: 1
+    models3D:
+    - {fileID: 8885557393897831346, guid: c84bf2146566b6647a619e3b0046cc2e, type: 3}
+    - {fileID: 993131550124125123, guid: 43d8493876aa9b44c9f172b400c119b9, type: 3}
+    upgradePrices: 0000000000000000
+    sprUI: {fileID: 0}
+  - name: TV
+    type: 2
+    models3D:
+    - {fileID: 8573110423320342406, guid: bd81d9ec63e7d0d49be16f2d9ce1e986, type: 3}
+    - {fileID: 5234542135269880011, guid: b60864d30633cdb4d9d0bd409d444f8c, type: 3}
+    - {fileID: 2532999115499273948, guid: bf0817d8bdd44c94cb524ca0a40751f7, type: 3}
+    upgradePrices: 000000000000000000000000
+    sprUI: {fileID: 0}
+  - name: Wardrobe
+    type: 0
+    models3D:
+    - {fileID: 4016613481104792425, guid: dd3e0eea5eeec464bba62733482e06d7, type: 3}
+    upgradePrices: 00000000
+    sprUI: {fileID: 0}
+  - name: Sofa
+    type: 3
+    models3D:
+    - {fileID: 8548419036869066700, guid: 9f25a2310cca13746b26337400699b94, type: 3}
+    - {fileID: 3443342370424973909, guid: 069f211b99f91de4ea1a4a6a9d01a270, type: 3}
+    - {fileID: 8624481062662013908, guid: 08a0d2ca59654ab43a5eefe60674d4a1, type: 3}
+    upgradePrices: 000000000000000000000000
+    sprUI: {fileID: 0}

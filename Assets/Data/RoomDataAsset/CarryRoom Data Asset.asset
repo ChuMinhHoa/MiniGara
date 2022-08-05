@@ -13,18 +13,25 @@ MonoBehaviour:
   m_Name: CarryRoom Data Asset
   m_EditorClassIdentifier: 
   datas:
-  - name: Carry
+  - name: VehicleEnergy
     type: 2
-    models3D: []
+    models3D:
+    - {fileID: 0}
+    upgradePrices: 00000000
     sprUI: {fileID: 0}
-    upgradePrices: 
-  - name: Table
-    type: 0
-    models3D: []
-    sprUI: {fileID: 0}
-    upgradePrices: 
-  - name: Tool
+  - name: Energy
     type: 1
-    models3D: []
+    models3D:
+    - {fileID: 889671017720283354, guid: 5d25f5e5d49cc314babf2aada639abc8, type: 3}
+    - {fileID: 1010750251514774945, guid: 863367ffbfcc3b3438a2f5659fbdd4ae, type: 3}
+    - {fileID: 7338870488996276132, guid: b9cc62d7e1f358343a57fea3bac9b18f, type: 3}
+    upgradePrices: 000000000000000000000000
     sprUI: {fileID: 0}
-    upgradePrices: 
+  - name: Atten
+    type: 0
+    models3D:
+    - {fileID: 1970418162426600463, guid: 873da8fe85d175b489e1f106ab2e7e4b, type: 3}
+    - {fileID: 477374814655295951, guid: 294f6d15a96bfbe47ad949ee0475a000, type: 3}
+    - {fileID: 8713929231840684050, guid: 982c943ba2a774a48a003e550a99e7a0, type: 3}
+    upgradePrices: 000000000000000000000000
+    sprUI: {fileID: 0}

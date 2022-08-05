@@ -4,20 +4,38 @@ using UnityEngine;
 using System;
 [Serializable]
 public class RoomSaveData {
+    [Header("ROOM MODEL DATA")]
     public List<BaseRoomSetting<FixRoomModelType>> fixRoomModelDatas = new List<BaseRoomSetting<FixRoomModelType>>();
     public List<BaseRoomSetting<CarryRoomModelType>> carryRoomModelDatas = new List<BaseRoomSetting<CarryRoomModelType>>();
     public List<BaseRoomSetting<LandingPadModelType>> landingPadModelDatas = new List<BaseRoomSetting<LandingPadModelType>>();
-    public List<BaseRoomSetting<LanchPadModelType>> lanchPadModelDatas = new List<BaseRoomSetting<LanchPadModelType>>();
     public List<BaseRoomSetting<HouseModelType>> houseModelDatas = new List<BaseRoomSetting<HouseModelType>>();
     public List<BaseRoomSetting<TakeOffModelType>> takeOffModelDatas = new List<BaseRoomSetting<TakeOffModelType>>();
 
     const string FixRoomModelType = "FixRoomModelType";
     const string CarryRoomModelType = "CarryRoomModelType";
     const string LandingPadModelType = "LandingPadModelType";
-    const string LanchPadModelType = "LanchPadModelType";
     const string HouseModelType = "HouseModelType";
     const string TakeOffModelType = "TakeOffModelType";
 
+    [Header("ROOM ID")]
+    public List<int> roomCarryID;
+    public List<int> roomLandingID;
+    public List<int> roomTakeOffID;
+    public List<int> roomFixID;
+    public List<int> roomHouseID;
+    public int totalRooms;
+    public int GetCarryRoomID(int index) { return roomCarryID[index]; }
+    public int GetLandingRoomID(int index) { return roomLandingID[index]; }
+    public int GetTakeOffRoomID(int index) { return roomTakeOffID[index]; }
+    public int GetFixRoomID(int index) { return roomFixID[index]; }
+    public int GetHouseRoomID(int index) { return roomHouseID[index]; }
+    public void AddCarryRoomID(int value) { roomCarryID.Add(value); }
+    public void AddLandingRoomID(int value) { roomLandingID.Add(value); }
+    public void AddTakeOffRoomID(int value) { roomTakeOffID.Add(value); }
+    public void AddFixRoomID(int value) { roomFixID.Add(value); }
+    public void AddHouseRoomID(int value) { roomHouseID.Add(value); }
+    public void AddTotalRooms() { totalRooms++; }
+    public int GetTotalRooms() { return totalRooms; }
     public BaseRoomSetting<T> GetRoomSettingData<T>(int roomID, RoomType roomType) {
         switch (roomType)
         {
@@ -26,13 +44,6 @@ public class RoomSaveData {
                 {
                     if (landingPadModelDatas[i].roomID == roomID)
                         return landingPadModelDatas[i] as BaseRoomSetting<T>;
-                }
-                break;
-            case RoomType.LanchRoom:
-                for (int i = 0; i < lanchPadModelDatas.Count; i++)
-                {
-                    if (lanchPadModelDatas[i].roomID == roomID)
-                        return lanchPadModelDatas[i] as BaseRoomSetting<T>;
                 }
                 break;
             case RoomType.FixRoom:
@@ -104,17 +115,6 @@ public class RoomSaveData {
                     }
                 }
                 if (!isHasData) landingPadModelDatas.Add(room as BaseRoomSetting<LandingPadModelType>);
-                break;
-            case LanchPadModelType:
-                for (int i = 0; i < lanchPadModelDatas.Count; i++)
-                {
-                    if (lanchPadModelDatas[i].roomID == room.roomID)
-                    {
-                        if (isOverride) lanchPadModelDatas[i] = room as BaseRoomSetting<LanchPadModelType>;
-                        isHasData = true;
-                    }
-                }
-                if (!isHasData) lanchPadModelDatas.Add(room as BaseRoomSetting<LanchPadModelType>);
                 break;
             case HouseModelType:
                 for (int i = 0; i < houseModelDatas.Count; i++)

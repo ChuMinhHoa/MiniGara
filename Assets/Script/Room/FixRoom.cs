@@ -7,19 +7,24 @@ public class FixRoom : BaseRoom<FixRoomModelType>
     protected StateMachine<FixRoom> m_Statemachine;
     public StateMachine<FixRoom> stateMachine { get { return m_Statemachine; } }
     Animator anim;
+    [Header("STATE")]
+    [Header("==============FIXROOM==============")]
     public FixRoomState state;
     FixRoomState currentState;
+    [Header("TRANSFORM")]
     public Transform fixPoint;
-    public bool able = true;
-    public bool workerOnPosition;
-    public List<VehicleCarry> vehiclesProgress;
     public Transform elevator;
-    public Transform workerPoint;
+    public Transform workerPoint; 
     Transform vehicleBroke;
+    [Header("VEHICLE CARRY")]
+    public List<VehicleCarry> vehiclesProgress;
     VehicleCarry vehicleOnProgress;
+    [Header("OTHER VARIABLE")]
+    public float timeRepairSetting; public bool able = true;
+    public bool workerOnPosition;
+    float animTime;
     Worker myWorker;
     float timeRepair;
-    public float timeRepairSetting;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -197,7 +202,6 @@ public class FixRoom : BaseRoom<FixRoomModelType>
         myWorker.work = false;
         myWorker = null;
     }
-    float animTime;
     public void FixedDoneExecute() {
         if (animTime <= 2f)
         {

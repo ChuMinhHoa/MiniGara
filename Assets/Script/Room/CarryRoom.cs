@@ -5,8 +5,9 @@ using UnityEngine.Events;
 
 public class CarryRoom : BaseRoom<CarryRoomModelType>
 {
-    public List<VehicleCarry> vehiclesCarry;
+    [Header("=========CARRY ROOM============")]
     public GameObject vehicleCarryPreb;
+    public List<VehicleCarry> vehiclesCarry;
     public List<Transform> spawnPoints;
     private void Start()
     {

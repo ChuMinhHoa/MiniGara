@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarryManager  : RoomManagerBase
+public class CarryManager : RoomManagerBase
 {
     public List<VehicleCarry> vehicleProgress;
     public List<CarryRoom> carryRooms;

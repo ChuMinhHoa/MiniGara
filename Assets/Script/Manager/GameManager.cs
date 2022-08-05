@@ -10,9 +10,18 @@ public class GameManager : MonoBehaviour
     public FixRoomManager fixRoomManager;
     public WorkerManager workerManager;
     public TakeOffManager takeOffManager;
+    public int roomCount;
     private void Awake()
     {
         instance = this;
+        SpawnRoom();
+    }
+    void SpawnRoom() {
+        carryVehicleCarryManager.SpawnRoom();
+        landingPadManager.SpawnRoom();
+        fixRoomManager.SpawnRoom();
+        workerManager.SpawnRoom();
+        takeOffManager.SpawnRoom();
     }
     private void Update()
     {

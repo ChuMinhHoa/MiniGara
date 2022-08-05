@@ -2,19 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LanchPad : BaseRoom<LanchPadModelType>
+public class LanchPad : MonoBehaviour
 {
+    
     protected StateMachine<LanchPad> m_Statemachine;
     public StateMachine<LanchPad> stateMachine { get { return m_Statemachine; } }
+    [Header("STATE")]
+    [Header("=============LANCHPAD===============")]
+    public LanchPadState state;
+    LanchPadState currentState;
+    [Header("TRANSFORM")]
+    public Transform loadingBayAim;
+    public Transform vehicleParent;
+    public Transform vehicleDropPoint;
+    public Transform vehiclePickUp;
+    [Header("CURVE")]
+    public AnimationCurve rotageCurve;
+    [Header("OTHER SCRIPT")]
+    public LandingPad currentLanding;
+    VehicleCarry myVehicleCarry;
+    float rotageTime;
+    Quaternion rotageTo;
+    Quaternion rotageFrom;
     private void Awake()
     {
         m_Statemachine = new StateMachine<LanchPad>(this);
         m_Statemachine.SetcurrentState(LanchPadIdle.instance);
         m_Statemachine.ChangeState(LanchPadIdle.instance);
     }   
-    public LanchPadState state;
-    LanchPadState currentState;
-    public LandingPad currentLanding;
+  
     private void Update()
     {
         stateMachine.Update();
@@ -56,15 +72,7 @@ public class LanchPad : BaseRoom<LanchPadModelType>
     public void LanchPadIdleEnter() { }
     public void LanchPadIdleExecute() { }
     public void LanchPadIdleEnd() { }
-    public Transform loadingBayAim;
-    public Transform vehicleParent;
-    public Transform vehicleDropPoint;
-    public AnimationCurve rotageCurve;
-    public Transform vehiclePickUp;
-    VehicleCarry myVehicleCarry;
-    float rotageTime;
-    Quaternion rotageTo;
-    Quaternion rotageFrom;
+    
     public void LanchPadPickUpEnter() {
         rotageTo = Quaternion.LookRotation(Vector3.right, Vector3.up);
         rotageFrom = loadingBayAim.rotation;

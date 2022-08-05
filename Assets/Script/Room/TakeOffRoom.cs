@@ -4,24 +4,28 @@ using UnityEngine;
 
 public class TakeOffRoom : BaseRoom<TakeOffModelType>
 {
+    protected StateMachine<TakeOffRoom> m_StateMachine;
+    public StateMachine<TakeOffRoom> stateMachine { get { return m_StateMachine; } }
+    [Header("VEHICLECARRY")]
+    [Header("==============TAKEOFF ROOM============")]
     public List<VehicleCarry> vehicleCarries;
-    Animator anim;
+    VehicleCarry vehicleOnProgrees;
+    [Header("STATE")]
+    public TakeOffRoomState state;
+    TakeOffRoomState currentState;
+    [Header("TRANSFORM")]
     public Transform elevatorTransform;
     public Transform pointVehicleCarryDrop;
     public Transform pointElevatorTake;
     public Transform pointElevatorDrop;
     public Transform pointStartFly;
-    public bool able;
-    VehicleCarry vehicleOnProgrees;
-    protected StateMachine<TakeOffRoom> m_StateMachine;
-    public StateMachine<TakeOffRoom> stateMachine { get { return m_StateMachine; } }
-    public TakeOffRoomState state;
-    TakeOffRoomState currentState;
     Transform vehicleBroke;
+    [Header("CURVE")]
     public AnimationCurve animCurve;
     float timeCurve;
     Vector3 startPoint;
     Vector3 endPoint;
+    public bool able;
     private void Awake()
     {
         m_StateMachine = new StateMachine<TakeOffRoom>(this);

@@ -13,17 +13,24 @@ public class LandingPad : BaseRoom<LandingPadModelType>
         m_Statemachine.SetcurrentState(LPadIdle.instance);
         m_Statemachine.ChangeState(LPadIdle.instance);
     }
+   
+    [Header("TRANSFORM & GAME OBJ")]
+    [Header("===========================LANDING ROOM==================================")]
     public Transform landingStartPosition;
     public Transform landingEndPosition;
     public Transform playerHandlePoint;
     public Transform monitorTransform;
-    VehicleBroke vehicleBroke;
     public GameObject elevator;
-    [SerializeField] Vector3 elevatorOffset;
-    public float elevatorSpeed;
+    [Header("STATE")]
     public LandingPadState state;
     LandingPadState currentState;
+    [Header("OTHER VARIABLE")]
+    public float elevatorSpeed;
     public bool able = true;
+    [SerializeField] Vector3 elevatorOffset;
+    VehicleCarry vehicleCarry;
+    VehicleBroke vehicleBroke;
+    Worker workerAble;
     private void Update()
     {
         stateMachine.Update();
@@ -64,7 +71,7 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     public void LPIdleEnter() { }
     public void LPIdleExecute() { }
     public void LPIdleEnd() { }
-    Worker workerAble;
+    
     public void CallWorkerEnter() { }
     public void CallWorkerExecute() {
         if (workerAble == null) {
@@ -88,7 +95,7 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     {
         elevatorStartPoint = elevator.transform.position;
     }
-    VehicleCarry vehicleCarry;
+    
     public void LaunchPadCallExecute()
     {
 
