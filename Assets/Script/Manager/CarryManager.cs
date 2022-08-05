@@ -20,17 +20,27 @@ public class CarryManager : RoomManagerBase
         int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
         if (roomID != -1)
         {
-           BaseRoomSetting<CarryRoomModelType> roomSetting = ProfileManager.instance.playerData.GetRoomData<CarryRoomModelType>(roomID, RoomType.CarryRoom);
+            newCarryRoom.roomSetting.roomID = roomID;
+            newCarryRoom.OnLoadRoom();
+            Debug.Log("Load Carry Room ID:" + roomID + " Data");
         }
         else
         {
             ProfileManager.instance.playerData.AddRoomID(RoomType.CarryRoom);
+            newCarryRoom.roomSetting.roomID = GameManager.instance.roomCount;
+            ProfileManager.instance.playerData.SaveRoomData<CarryRoomModelType>(newCarryRoom.roomSetting);
+            newCarryRoom.OnLoadRoom();
+            Debug.Log("Create Carry Room ID:" + newCarryRoom.roomSetting.roomID + " Data");
         }
         RotageAffterSpawn(newCarryRoom.transform);
         GameManager.instance.roomCount++;
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            ProfileManager.instance.playerData.SaveData();
+        }
         if (vehicleProgress.Count > 0)
         {
             FixRoom fixRoom = GameManager.instance.fixRoomManager.GetFixRoom();

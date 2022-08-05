@@ -34,6 +34,22 @@ public class WorkerManager : RoomManagerBase
     {
         House newHouse = Instantiate(roomPrefab, spawnPoint.position, Quaternion.identity, roomParent).GetComponent<House>();
         houses.Add(newHouse);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        if (roomID != -1)
+        {
+            newHouse.roomSetting.roomID = roomID;
+            newHouse.OnLoadRoom();
+            Debug.Log("Load House ID:" + roomID + " Data");
+        }
+        else
+        {
+            ProfileManager.instance.playerData.AddRoomID(RoomType.House);
+            newHouse.roomSetting.roomID = GameManager.instance.roomCount;
+            ProfileManager.instance.playerData.SaveRoomData<HouseModelType>(newHouse.roomSetting);
+            newHouse.OnLoadRoom();
+            Debug.Log("Create House ID:" + newHouse.roomSetting.roomID + " Data");
+        }
         RotageAffterSpawn(newHouse.transform);
+        GameManager.instance.roomCount++;
     }
 }

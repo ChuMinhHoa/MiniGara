@@ -163,7 +163,6 @@ GameObject:
   - component: {fileID: 6886329357119308396}
   - component: {fileID: 6886329357119308397}
   - component: {fileID: 6886329357119308398}
-  - component: {fileID: 6886329357119308399}
   - component: {fileID: 6886329357119308392}
   m_Layer: 6
   m_Name: TakeOffPad
@@ -243,20 +242,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6886329357119308399
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6886329357119308393}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 3cc4b107b1520d540843a8d1d9b8491f, type: 3}
 --- !u!114 &6886329357119308392
 MonoBehaviour:
   m_ObjectHideFlags: 0

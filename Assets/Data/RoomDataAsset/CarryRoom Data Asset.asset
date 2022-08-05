@@ -16,7 +16,7 @@ MonoBehaviour:
   - name: VehicleEnergy
     type: 2
     models3D:
-    - {fileID: 0}
+    - {fileID: 897653691799125816, guid: 0a3e79abbf7730a44b124e40a8c52fa9, type: 3}
     upgradePrices: 00000000
     sprUI: {fileID: 0}
   - name: Energy

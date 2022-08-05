@@ -9,7 +9,7 @@ public class RoomManagerBase : MonoBehaviour
     public Quaternion rotageRoomSpawn;
     public GameObject roomPrefab;
     public int countRoom;
-    public virtual void SpawnRoom() { }
+    public virtual void SpawnRoom() {}
     public virtual void RotageAffterSpawn(Transform newObjTransform) {
         newObjTransform.rotation = rotageRoomSpawn;
     }

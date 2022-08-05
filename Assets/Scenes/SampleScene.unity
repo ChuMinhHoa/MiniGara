@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -304,7 +304,7 @@ MonoBehaviour:
   roomParent: {fileID: 1894439778}
   rotageRoomSpawn: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   roomPrefab: {fileID: 6936878227388967854, guid: 34b272a26afb07245b34ca9248a70a52, type: 3}
-  countRoom: 2
+  countRoom: 1
   landingPads: []
   lanchPads: []
   lanchPadPrefab: {fileID: 5324875282504735820, guid: d489cb06691eb0e499d9d1d96abb1a68, type: 3}
@@ -462,7 +462,7 @@ MonoBehaviour:
   roomParent: {fileID: 1048547156}
   rotageRoomSpawn: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   roomPrefab: {fileID: 5892958485173393504, guid: caae1e87b45282c4aadf19f425494b7f, type: 3}
-  countRoom: 2
+  countRoom: 1
   vehicleProgress: []
   carryRooms: []
 --- !u!4 &99151625 stripped
@@ -747,19 +747,19 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 0
   m_LookaheadIgnoreY: 0
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_CameraDistance: 9.14
-  m_DeadZoneWidth: 0.04
-  m_DeadZoneHeight: 0.04
+  m_DeadZoneWidth: 0
+  m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.04
-  m_SoftZoneHeight: 0.04
+  m_SoftZoneWidth: 0
+  m_SoftZoneHeight: 0
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
@@ -1608,7 +1608,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587694644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.499, y: 0, z: -6.781}
+  m_LocalPosition: {x: 3.499, y: 1.39, z: -6.781}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2989,7 +2989,7 @@ MonoBehaviour:
   m_Follow: {fileID: 587694645}
   m_Lens:
     FieldOfView: 20
-    OrthographicSize: 21.2
+    OrthographicSize: 3
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -3010,7 +3010,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 899017906}
   m_LocalRotation: {x: 0.1464466, y: -0.8535535, z: 0.35355338, w: 0.35355338}
-  m_LocalPosition: {x: 8.069002, y: 7.4629555, z: -2.2109995}
+  m_LocalPosition: {x: 8.069002, y: 8.852956, z: -2.2109995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 209568974}
@@ -3330,8 +3330,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 20
-  orthographic: 0
-  orthographic size: 21.2
+  orthographic: 1
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3355,7 +3355,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.1464466, y: -0.8535535, z: 0.35355338, w: 0.35355338}
-  m_LocalPosition: {x: 8.069002, y: 7.4629555, z: -2.2109995}
+  m_LocalPosition: {x: 8.069002, y: 8.852956, z: -2.2109995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3572,6 +3572,7 @@ MonoBehaviour:
   fixRoomManager: {fileID: 1590025232}
   workerManager: {fileID: 2139413625}
   takeOffManager: {fileID: 1617516625}
+  roomCount: 0
 --- !u!4 &1069812413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4373991969907444, guid: 1c3a468e1cdbae84c88c1ae6d5fcfccb, type: 3}
@@ -4526,7 +4527,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467170352}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.85, y: 0, z: -12.794}
+  m_LocalPosition: {x: -7.85, y: 0, z: -15.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1359449759}
@@ -4908,7 +4909,7 @@ MonoBehaviour:
   roomParent: {fileID: 211469894}
   rotageRoomSpawn: {x: 0, y: 0, z: 0, w: 0}
   roomPrefab: {fileID: 8648933980666038013, guid: 22a8d373bdff13b4e976467790329238, type: 3}
-  countRoom: 2
+  countRoom: 1
   fixRooms: []
 --- !u!1001 &1592315388
 PrefabInstance:
@@ -5086,7 +5087,7 @@ MonoBehaviour:
   roomParent: {fileID: 2051470194}
   rotageRoomSpawn: {x: 0, y: -0.70710677, z: 0, w: 0.70710677}
   roomPrefab: {fileID: 6886329357119308393, guid: f67a529481516b8408160fb2e80f3899, type: 3}
-  countRoom: 2
+  countRoom: 1
   takeOffRooms: []
   vehicleCarries: []
 --- !u!1001 &1619110219
@@ -6385,6 +6386,11 @@ MonoBehaviour:
       landingPadModelDatas: []
       houseModelDatas: []
       takeOffModelDatas: []
+      roomCarryID: 
+      roomLandingID: 
+      roomTakeOffID: 
+      roomFixID: 
+      roomHouseID: 
 --- !u!4 &1971698353
 Transform:
   m_ObjectHideFlags: 0
@@ -6835,7 +6841,7 @@ MonoBehaviour:
   roomParent: {fileID: 59518700}
   rotageRoomSpawn: {x: 0, y: 1, z: 0, w: -0.00000004371139}
   roomPrefab: {fileID: 2498487376083351637, guid: 18ead054bfde23d418234e5ac7dea544, type: 3}
-  countRoom: 4
+  countRoom: 1
   houses: []
 --- !u!4 &2139413626
 Transform:

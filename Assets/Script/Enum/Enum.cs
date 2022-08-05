@@ -54,8 +54,7 @@ public enum RoomType {
     House,
     TakeOffRoom
 }
-public enum ModelType { }
-public enum WorkerState { 
+public enum StaffState { 
     Idle,
     Move,
     Work,

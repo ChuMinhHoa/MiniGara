@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         if (landingPad == null)
             return false;
         int countAbleVehicle = carryVehicleCarryManager.CountCarryVehicle();
-        if (countAbleVehicle <= 2)
+        if (countAbleVehicle <= 1)
             return false;
         return true;
     }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 [Serializable]
+public class StaffData { 
+
+}
+[Serializable]
 public class RoomSaveData {
     [Header("ROOM MODEL DATA")]
     public List<BaseRoomSetting<FixRoomModelType>> fixRoomModelDatas = new List<BaseRoomSetting<FixRoomModelType>>();
@@ -157,6 +161,7 @@ public class PlayerData
         {
             PlayerData dataSave = JsonUtility.FromJson<PlayerData>(jsonData);
             roomSaveData = dataSave.roomSaveData;
+            Debug.Log("Load Data");
         }
         else {
             SaveData();
@@ -172,19 +177,19 @@ public class PlayerData
         switch (roomType)
         {
             case RoomType.LandingRoom:
-                if (index <= roomSaveData.roomCarryID.Count) return roomSaveData.GetLandingRoomID(index);
+                if (index < roomSaveData.roomCarryID.Count) return roomSaveData.GetLandingRoomID(index);
                 else return -1;
             case RoomType.FixRoom:
-                if (index <= roomSaveData.roomFixID.Count) return roomSaveData.GetFixRoomID(index);
+                if (index < roomSaveData.roomFixID.Count) return roomSaveData.GetFixRoomID(index);
                 else return -1;
             case RoomType.CarryRoom:
-                if (index <= roomSaveData.roomCarryID.Count) return roomSaveData.GetCarryRoomID(index);
+                if (index < roomSaveData.roomCarryID.Count) return roomSaveData.GetCarryRoomID(index);
                 else return -1;
             case RoomType.House:
-                if (index <= roomSaveData.roomHouseID.Count) return roomSaveData.GetHouseRoomID(index);
+                if (index < roomSaveData.roomHouseID.Count) return roomSaveData.GetHouseRoomID(index);
                 else return -1;
             case RoomType.TakeOffRoom:
-                if (index <= roomSaveData.roomTakeOffID.Count) return roomSaveData.GetTakeOffRoomID(index);
+                if (index < roomSaveData.roomTakeOffID.Count) return roomSaveData.GetTakeOffRoomID(index);
                 else return -1;
             default:
                 break;
@@ -212,8 +217,10 @@ public class PlayerData
             default:
                 break;
         }
+        roomSaveData.AddTotalRooms();
     }
     public void SaveData() {
+        Debug.Log("Save Data");
         PlayerPrefs.SetString("PlayerData", JsonUtility.ToJson(this).ToString());
     }
     public string GetData() { return PlayerPrefs.GetString("PlayerData"); }

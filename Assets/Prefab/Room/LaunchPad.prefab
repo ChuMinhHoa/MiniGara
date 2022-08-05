@@ -122,7 +122,6 @@ GameObject:
   - component: {fileID: 5323387494702738676}
   - component: {fileID: 5323387494702738635}
   - component: {fileID: 5323387494702738634}
-  - component: {fileID: 5323387494702738677}
   m_Layer: 0
   m_Name: LoadingBay
   m_TagString: Untagged
@@ -194,20 +193,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5323387494702738677
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5323387494702738679}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 31c622f3787f84143bf325bee9110f10, type: 3}
 --- !u!1 &5324618832814536078
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +285,6 @@ GameObject:
   - component: {fileID: 5327992589010971158}
   - component: {fileID: 5303094758322834786}
   - component: {fileID: 5310517619688485476}
-  - component: {fileID: 5261208339624385332}
   - component: {fileID: 5324875282504735821}
   m_Layer: 0
   m_Name: LaunchPad
@@ -316,7 +300,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5324875282504735820}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children:
@@ -376,20 +360,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5261208339624385332
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5324875282504735820}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 91827364d300aee4bad0031e1e96c63a, type: 3}
 --- !u!114 &5324875282504735821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,27 +372,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bb3281acc4241f4ca6fef364535fc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSetting:
-    roomType: 1
-    modelPositions:
-    - type: 0
-      level: 0
-      rootObject: {fileID: 0}
-      currentModel: {fileID: 0}
-    - type: 0
-      level: 0
-      rootObject: {fileID: 0}
-      currentModel: {fileID: 0}
-    - type: 0
-      level: 0
-      rootObject: {fileID: 0}
-      currentModel: {fileID: 0}
-  waitingPoints: []
   state: 0
-  currentLanding: {fileID: 0}
   loadingBayAim: {fileID: 5323387494702738676}
   vehicleParent: {fileID: 5323387494422975209}
   vehicleDropPoint: {fileID: 5323387494390086383}
+  vehiclePickUp: {fileID: 0}
   rotageCurve:
     serializedVersion: 2
     m_Curve:
@@ -447,7 +401,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  vehiclePickUp: {fileID: 0}
+  currentLanding: {fileID: 0}
 --- !u!1 &5324964288395237066
 GameObject:
   m_ObjectHideFlags: 0

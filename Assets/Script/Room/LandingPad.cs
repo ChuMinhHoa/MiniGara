@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LandingPad : BaseRoom<LandingPadModelType>
 {
-
     protected StateMachine<LandingPad> m_Statemachine;
     public StateMachine<LandingPad> stateMachine { get { return m_Statemachine; } }
     private void Awake()
@@ -85,7 +84,7 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     }
     public void CallWorkerEnd() { }
     void WorkerWork() {
-        workerAble.ChangeState(WorkerState.Work);
+        workerAble.ChangeState(StaffState.Work);
     }
     void CallLanchPad() {
         state = LandingPadState.LaunchPadCall;

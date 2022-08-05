@@ -15,7 +15,23 @@ public class FixRoomManager : RoomManagerBase
     {
         FixRoom newFixRoom = Instantiate(roomPrefab, spawnPoint.position, Quaternion.identity, roomParent).GetComponent<FixRoom>();
         fixRooms.Add(newFixRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        if (roomID != -1)
+        {
+            newFixRoom.roomSetting.roomID = roomID;
+            newFixRoom.OnLoadRoom();
+            Debug.Log("Load Fix Room ID:" + roomID + " Data");
+        }
+        else
+        {
+            ProfileManager.instance.playerData.AddRoomID(RoomType.FixRoom);
+            newFixRoom.roomSetting.roomID = GameManager.instance.roomCount;
+            ProfileManager.instance.playerData.SaveRoomData<FixRoomModelType>(newFixRoom.roomSetting);
+            newFixRoom.OnLoadRoom();
+            Debug.Log("Create Fix Room ID:" + newFixRoom.roomSetting.roomID + " Data");
+        }
         RotageAffterSpawn(newFixRoom.transform);
+        GameManager.instance.roomCount++;
     }
     public override FixRoom GetFixRoom() {
         foreach (FixRoom fixRoom in fixRooms)

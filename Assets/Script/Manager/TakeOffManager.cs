@@ -17,8 +17,23 @@ public class TakeOffManager : RoomManagerBase
 
         TakeOffRoom newTakeOffRoom = Instantiate(roomPrefab, spawnPoint.position, Quaternion.identity, roomParent).GetComponent<TakeOffRoom>();
         takeOffRooms.Add(newTakeOffRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        if (roomID != -1)
+        {
+            newTakeOffRoom.roomSetting.roomID = roomID;
+            newTakeOffRoom.OnLoadRoom();
+            Debug.Log("Load TakeOFf ID:" + roomID + " Data");
+        }
+        else
+        {
+            ProfileManager.instance.playerData.AddRoomID(RoomType.TakeOffRoom);
+            newTakeOffRoom.roomSetting.roomID = GameManager.instance.roomCount;
+            ProfileManager.instance.playerData.SaveRoomData<TakeOffModelType>(newTakeOffRoom.roomSetting);
+            newTakeOffRoom.OnLoadRoom();
+            Debug.Log("Create TakeOFf ID:" + newTakeOffRoom.roomSetting.roomID + " Data");
+        }
         RotageAffterSpawn(newTakeOffRoom.transform);
-
+        GameManager.instance.roomCount++;
     }
     public void AddVehicleCarry(VehicleCarry vehicleCarry) { vehicleCarries.Add(vehicleCarry); }
     void RemoveVehicleCarry(VehicleCarry vehicleCarry) { vehicleCarries.Remove(vehicleCarry); }
