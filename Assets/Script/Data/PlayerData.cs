@@ -23,7 +23,7 @@ public class RoomSaveData {
     public List<int> roomTakeOffID;
     public List<int> roomFixID;
     public List<int> roomHouseID;
-    public int totalRooms;
+    int totalRooms;
     public int GetCarryRoomID(int index) { return roomCarryID[index]; }
     public int GetLandingRoomID(int index) { return roomLandingID[index]; }
     public int GetTakeOffRoomID(int index) { return roomTakeOffID[index]; }
@@ -167,6 +167,51 @@ public class PlayerData
     }
     public BaseRoomSetting<T> GetRoomData<T>(int roomID, RoomType roomType) {
         return roomSaveData.GetRoomSettingData<T>(roomID, roomType);
+    }
+    public int GetRoomID(int index, RoomType roomType) {
+        switch (roomType)
+        {
+            case RoomType.LandingRoom:
+                if (index <= roomSaveData.roomCarryID.Count) return roomSaveData.GetLandingRoomID(index);
+                else return -1;
+            case RoomType.FixRoom:
+                if (index <= roomSaveData.roomFixID.Count) return roomSaveData.GetFixRoomID(index);
+                else return -1;
+            case RoomType.CarryRoom:
+                if (index <= roomSaveData.roomCarryID.Count) return roomSaveData.GetCarryRoomID(index);
+                else return -1;
+            case RoomType.House:
+                if (index <= roomSaveData.roomHouseID.Count) return roomSaveData.GetHouseRoomID(index);
+                else return -1;
+            case RoomType.TakeOffRoom:
+                if (index <= roomSaveData.roomTakeOffID.Count) return roomSaveData.GetTakeOffRoomID(index);
+                else return -1;
+            default:
+                break;
+        }
+        return -1;
+    }
+    public void AddRoomID(RoomType roomType) {
+        switch (roomType)
+        {
+            case RoomType.LandingRoom:
+                roomSaveData.AddLandingRoomID(roomSaveData.GetTotalRooms());
+                break;
+            case RoomType.FixRoom:
+                roomSaveData.AddFixRoomID(roomSaveData.GetTotalRooms());
+                break;
+            case RoomType.CarryRoom:
+                roomSaveData.AddCarryRoomID(roomSaveData.GetTotalRooms());
+                break;
+            case RoomType.House:
+                roomSaveData.AddHouseRoomID(roomSaveData.GetTotalRooms());
+                break;
+            case RoomType.TakeOffRoom:
+                roomSaveData.AddTakeOffRoomID(roomSaveData.GetTotalRooms());
+                break;
+            default:
+                break;
+        }
     }
     public void SaveData() {
         PlayerPrefs.SetString("PlayerData", JsonUtility.ToJson(this).ToString());

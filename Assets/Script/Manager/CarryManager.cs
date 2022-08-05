@@ -17,7 +17,17 @@ public class CarryManager : RoomManagerBase
     public override void AddCarryRoom(Transform instancePoint) {
         CarryRoom newCarryRoom = Instantiate(roomPrefab, instancePoint.position, Quaternion.identity, roomParent).GetComponent<CarryRoom>();
         carryRooms.Add(newCarryRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        if (roomID != -1)
+        {
+           BaseRoomSetting<CarryRoomModelType> roomSetting = ProfileManager.instance.playerData.GetRoomData<CarryRoomModelType>(roomID, RoomType.CarryRoom);
+        }
+        else
+        {
+            ProfileManager.instance.playerData.AddRoomID(RoomType.CarryRoom);
+        }
         RotageAffterSpawn(newCarryRoom.transform);
+        GameManager.instance.roomCount++;
     }
     private void Update()
     {
