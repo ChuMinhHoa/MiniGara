@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TakeOffRoom : BaseRoom
+public class TakeOffRoom : BaseRoom<TakeOffModelType>
 {
     public List<VehicleCarry> vehicleCarries;
     Animator anim;

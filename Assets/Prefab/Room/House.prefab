@@ -933,8 +933,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9085945f2a1f24db51a300b2330025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelPosition: []
-  roomType: 0
+  roomSetting:
+    roomType: 4
+    modelPositions:
+    - type: 0
+      level: 0
+      rootObject: {fileID: 0}
+      currentModel: {fileID: 0}
+    - type: 1
+      level: 0
+      rootObject: {fileID: 0}
+      currentModel: {fileID: 0}
+    - type: 2
+      level: 0
+      rootObject: {fileID: 0}
+      currentModel: {fileID: 0}
   waitingPoints:
   - point: {fileID: 3375223772151542323}
     able: 1

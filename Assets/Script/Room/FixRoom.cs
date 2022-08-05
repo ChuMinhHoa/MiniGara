@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FixRoom : BaseRoom
+public class FixRoom : BaseRoom<FixRoomModelType>
 {
     protected StateMachine<FixRoom> m_Statemachine;
     public StateMachine<FixRoom> stateMachine { get { return m_Statemachine; } }

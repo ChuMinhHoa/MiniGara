@@ -50,7 +50,10 @@ public enum FixRoomState
 public enum RoomType { 
     LandingRoom,
     LanchRoom,
-    FixRoom
+    FixRoom,
+    CarryRoom,
+    House,
+    TakeOffRoom
 }
 public enum ModelType { }
 public enum WorkerState { 
@@ -66,3 +69,38 @@ public enum TakeOffRoomState {
     Drop,
     TakeOff
 }
+#region Model Type
+public enum FixRoomModelType { 
+    FixRoom_Energy,
+    FixRoom_Tool,
+    FixRoom_Table
+}
+public enum CarryRoomModelType
+{
+    CarryRoom_Atten,
+    CarryRoom_Energy,
+    CarryRoom_Carry
+}
+public enum HouseModelType {
+    House_Table,
+    House_Bed,
+    House_TV
+}
+public enum LandingPadModelType
+{
+    LandingPad_Table,
+    LandingPad_Bed,
+    LandingPad_TV
+}
+public enum TakeOffModelType
+{
+    TakeOff_Table,
+    TakeOff_Bed,
+    TakeOff_TV
+}
+public enum LanchPadModelType
+{
+    LanchPad_LoadingBay,
+    LanchPad_Energy,
+}
+#endregion

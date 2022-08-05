@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class House : BaseRoom
+public class House : BaseRoom<HouseModelType>
 {
     public List<Worker> workers;
     public int maxAmountWorker = 2;

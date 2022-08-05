@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LanchPad : BaseRoom
+public class LanchPad : BaseRoom<LanchPadModelType>
 {
     protected StateMachine<LanchPad> m_Statemachine;
     public StateMachine<LanchPad> stateMachine { get { return m_Statemachine; } }

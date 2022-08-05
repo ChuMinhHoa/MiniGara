@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LandingPad : BaseRoom
+public class LandingPad : BaseRoom<LandingPadModelType>
 {
 
     protected StateMachine<LandingPad> m_Statemachine;

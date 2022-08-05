@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CarryRoom : BaseRoom
+public class CarryRoom : BaseRoom<CarryRoomModelType>
 {
     public List<VehicleCarry> vehiclesCarry;
     public GameObject vehicleCarryPreb;
