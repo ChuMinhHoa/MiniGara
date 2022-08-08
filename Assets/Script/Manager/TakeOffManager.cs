@@ -10,19 +10,19 @@ public class TakeOffManager : RoomManagerBase
     {
         for (int i = 0; i < countRoom; i++)
         {
-            AddTakeOffRoom(spawnRoomPoints[i]);
+            AddTakeOffRoom(spawnRoomPoints[i], i);
         }
     }
-    public override void AddTakeOffRoom(Transform spawnPoint) {
+    public override void AddTakeOffRoom(Transform spawnPoint, int indexRoom) {
 
         TakeOffRoom newTakeOffRoom = Instantiate(roomPrefab, spawnPoint.position, Quaternion.identity, roomParent).GetComponent<TakeOffRoom>();
         takeOffRooms.Add(newTakeOffRoom);
-        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(indexRoom, RoomType.TakeOffRoom);
         if (roomID != -1)
         {
             newTakeOffRoom.roomSetting.roomID = roomID;
             newTakeOffRoom.OnLoadRoom();
-            Debug.Log("Load TakeOFf ID:" + roomID + " Data");
+            Debug.Log("Load TakeOff ID:" + roomID + " Data");
         }
         else
         {
@@ -30,7 +30,7 @@ public class TakeOffManager : RoomManagerBase
             newTakeOffRoom.roomSetting.roomID = GameManager.instance.roomCount;
             ProfileManager.instance.playerData.SaveRoomData<TakeOffModelType>(newTakeOffRoom.roomSetting);
             newTakeOffRoom.OnLoadRoom();
-            Debug.Log("Create TakeOFf ID:" + newTakeOffRoom.roomSetting.roomID + " Data");
+            Debug.Log("Create TakeOff ID:" + newTakeOffRoom.roomSetting.roomID + " Data");
         }
         RotageAffterSpawn(newTakeOffRoom.transform);
         GameManager.instance.roomCount++;

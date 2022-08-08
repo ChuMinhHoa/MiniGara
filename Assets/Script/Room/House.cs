@@ -61,7 +61,24 @@ public class House : BaseRoom<HouseModelType>
             Worker workerNew = Instantiate(workerPrefab, pointOpenDoor.position, Quaternion.identity).GetComponent<Worker>();
             workers.Add(workerNew);
             workerNew.ChangeHouse(this);
+            int staffID = ProfileManager.instance.playerData.GetStaffID(i, StaffType.Worker);
+            if (staffID != -1)
+            {
+                workerNew.staffSetting.staffID = staffID;
+                workerNew.OnLoadStaff();
+                Debug.Log("Load Worker ID:" + staffID + " Data");
+            }
+            else
+            {
+                ProfileManager.instance.playerData.AddStaffID(StaffType.Worker);
+                workerNew.staffSetting.staffID = GameManager.instance.staffCount;
+                ProfileManager.instance.playerData.SaveStaffData<WorkerModelType>(workerNew.staffSetting);
+                workerNew.OnLoadStaff();
+                Debug.Log("Create Worker ID:" + workerNew.staffSetting.staffID + " Data");
+            }
+            GameManager.instance.staffCount++;
         }
+        ProfileManager.instance.playerData.SaveData();
     }
     public Worker GetWorker() {
         foreach (Worker worker in workers)

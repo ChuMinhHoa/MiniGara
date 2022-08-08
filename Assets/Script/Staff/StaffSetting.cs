@@ -1,18 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class StaffSetting : MonoBehaviour
+[System.Serializable]
+public class StaffSetting<T>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public StaffType staffType;
+    public int staffID;
+    public List<StaffModelPos<T>> staffModelsPos;
 }

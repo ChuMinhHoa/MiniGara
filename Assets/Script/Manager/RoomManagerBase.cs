@@ -17,11 +17,11 @@ public class RoomManagerBase : MonoBehaviour
     {
         newObjTransform.rotation = rotageTo;
     }
-    public virtual void AddFixRoom(Transform spawnPoint) { }
-    public virtual void AddLandingRoom(Transform spawnLandingPoint, Transform spawnLanchPoint) { }
-    public virtual void AddCarryRoom(Transform spawnPoint) { }
-    public virtual void AddTakeOffRoom(Transform spawnPoint) { }
-    public virtual void AddHouseRoom(Transform spawnPoint) { }
+    public virtual void AddFixRoom(Transform spawnPoint, int indexRoom) { }
+    public virtual void AddLandingRoom(Transform spawnLandingPoint, Transform spawnLanchPoint, int indexRoom) { }
+    public virtual void AddCarryRoom(Transform spawnPoint, int indexRoom) { }
+    public virtual void AddTakeOffRoom(Transform spawnPoint, int indexRoom) { }
+    public virtual void AddHouseRoom(Transform spawnPoint, int indexRoom) { }
     public virtual FixRoom GetFixRoom() {
         return null;
     }

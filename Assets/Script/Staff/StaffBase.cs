@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 
-public class StaffBase : MonoBehaviour
+public class StaffBase<T> : MonoBehaviour
 {
-    protected StateMachine<StaffBase> m_Statemachine;
-    public StateMachine<StaffBase> stateMachine { get { return m_Statemachine; } }
     [Header("ANIM AND STATE")]
     [Header("====================BASE STAFF========================")]
     public Animator anim;
@@ -31,50 +29,34 @@ public class StaffBase : MonoBehaviour
     float timeRotage;
     Quaternion rotageFrom;
     Quaternion rotageTo;
-    private void Awake()
-    {
-        m_Statemachine = new StateMachine<StaffBase>(this);
-        m_Statemachine.SetcurrentState(StaffIdle.instance);
-        m_Statemachine.SetcurrentState(StaffIdle.instance);
-        anim = GetComponent<Animator>();
+    #region DATA
+    [Header("DATA")]
+    public StaffSetting<T> staffSetting;
+    public StaffDataAsset<T> staffDataAsset;
+    public void OnLoadStaff() {
+        LoadFromSaveData(ProfileManager.instance.playerData.GetStaffData<T>(staffSetting.staffID, staffSetting.staffType));
     }
-    private void Update()
-    {
-        stateMachine.Update();
-        switch (state)
+    void LoadFromSaveData(StaffSetting<T> staffSave) {
+        for (int i = 0; i < staffSetting.staffModelsPos.Count; i++)
         {
-            case StaffState.Idle:
-                if (currentState != state)
-                {
-                    currentState = state;
-                    stateMachine.ChangeState(StaffIdle.instance);
-                }
-                break;
-            case StaffState.Move:
-                if (currentState != state)
-                {
-                    currentState = state;
-                    stateMachine.ChangeState(StaffMove.instance);
-                }
-                break;
-            case StaffState.Rotage:
-                if (currentState != state)
-                {
-                    currentState = state;
-                    stateMachine.ChangeState(StaffRotage.instance);
-                }
-                break;
-            case StaffState.Work:
-                if (currentState != state)
-                {
-                    currentState = state;
-                    stateMachine.ChangeState(StaffWork.instance);
-                }
-                break;
-            default:
-                break;
+            StaffModelPos<T> model = staffSetting.staffModelsPos[i];
+            if (model.rootObject.childCount > 0)
+                Destroy(model.rootObject.GetChild(0).gameObject);
+            if (staffSave != null && staffSave.staffModelsPos.Count > 0)
+                model.level = staffSave.staffModelsPos[i].level;
+            if (model.level > 0)
+            {
+                Transform rootTransform = model.rootObject;
+                Transform newModelCreate = Instantiate(staffDataAsset.GetModelByType(model.type.ToString(), model.level));
+                newModelCreate.SetParent(rootTransform);
+                newModelCreate.localPosition = Vector3.zero;
+                newModelCreate.localEulerAngles = Vector3.zero;
+                newModelCreate.localScale = new Vector3(1, 1, 1);
+                model.currentModel = newModelCreate;
+            }
         }
     }
+    #endregion
     public virtual void StaffIdleEnter() {
         anim.Play("Idle");
     }
@@ -199,102 +181,102 @@ public class StaffBase : MonoBehaviour
         return false;
     }
 }
-public class StaffIdle : State<StaffBase>
+public class StaffIdle<T> : State<StaffBase<T>>
 {
-    private static StaffIdle m_Instance;
-    public static StaffIdle instance
+    private static StaffIdle<T> m_Instance;
+    public static StaffIdle<T> instance
     {
         get
         {
             if (m_Instance == null)
-                m_Instance = new StaffIdle();
+                m_Instance = new StaffIdle<T>();
             return m_Instance;
         }
     }
-    public override void Enter(StaffBase go)
+    public override void Enter(StaffBase<T> go)
     {
         go.StaffIdleEnter();
     }
-    public override void End(StaffBase go)
+    public override void End(StaffBase<T> go)
     {
         go.StaffIdleExecute();
     }
-    public override void Execute(StaffBase go)
+    public override void Execute(StaffBase<T> go)
     {
         go.StaffIdleEnd();
     }
 }
-public class StaffMove : State<StaffBase>
+public class StaffMove<T> : State<StaffBase<T>>
 {
-    private static StaffMove m_Instance;
-    public static StaffMove instance
+    private static StaffMove<T> m_Instance;
+    public static StaffMove<T> instance
     {
         get
         {
             if (m_Instance == null)
-                m_Instance = new StaffMove();
+                m_Instance = new StaffMove<T>();
             return m_Instance;
         }
     }
-    public override void Enter(StaffBase go)
+    public override void Enter(StaffBase<T> go)
     {
         go.StaffMoveEnter();
     }
-    public override void End(StaffBase go)
+    public override void End(StaffBase<T> go)
     {
         go.StaffMoveEnd();
     }
-    public override void Execute(StaffBase go)
+    public override void Execute(StaffBase<T> go)
     {
         go.StaffMoveExecute();
     }
 }
-public class StaffRotage : State<StaffBase>
+public class StaffRotage<T> : State<StaffBase<T>>
 {
-    private static StaffRotage m_Instance;
-    public static StaffRotage instance
+    private static StaffRotage<T> m_Instance;
+    public static StaffRotage<T> instance
     {
         get
         {
             if (m_Instance == null)
-                m_Instance = new StaffRotage();
+                m_Instance = new StaffRotage<T>();
             return m_Instance;
         }
     }
-    public override void Enter(StaffBase go)
+    public override void Enter(StaffBase<T> go)
     {
         go.StaffRotageEnter();
     }
-    public override void End(StaffBase go)
+    public override void End(StaffBase<T> go)
     {
         go.StaffRotageEnd();
     }
-    public override void Execute(StaffBase go)
+    public override void Execute(StaffBase<T> go)
     {
         go.StaffRotageExecute();
     }
 }
-public class StaffWork : State<StaffBase>
+public class StaffWork<T> : State<StaffBase<T>>
 {
-    private static StaffWork m_Instance;
-    public static StaffWork instance
+    private static StaffWork<T> m_Instance;
+    public static StaffWork<T> instance
     {
         get
         {
             if (m_Instance == null)
-                m_Instance = new StaffWork();
+                m_Instance = new StaffWork<T>();
             return m_Instance;
         }
     }
-    public override void Enter(StaffBase go)
+    public override void Enter(StaffBase<T> go)
     {
         go.StaffWorkEnter();
     }
-    public override void End(StaffBase go)
+    public override void End(StaffBase<T> go)
     {
         go.StaffWorkEnd();
     }
-    public override void Execute(StaffBase go)
+    public override void Execute(StaffBase<T> go)
     {
         go.StaffWorkExecute();
     }

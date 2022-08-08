@@ -11,13 +11,13 @@ public class CarryManager : RoomManagerBase
     {
         for (int i = 0; i < countRoom; i++)
         {
-            AddCarryRoom(spawnRoomPoints[i]);
+            AddCarryRoom(spawnRoomPoints[i], i);
         }
     }
-    public override void AddCarryRoom(Transform instancePoint) {
+    public override void AddCarryRoom(Transform instancePoint, int indexRoom) {
         CarryRoom newCarryRoom = Instantiate(roomPrefab, instancePoint.position, Quaternion.identity, roomParent).GetComponent<CarryRoom>();
         carryRooms.Add(newCarryRoom);
-        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(indexRoom, RoomType.CarryRoom);
         if (roomID != -1)
         {
             newCarryRoom.roomSetting.roomID = roomID;

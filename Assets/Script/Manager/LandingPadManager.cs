@@ -12,16 +12,16 @@ public class LandingPadManager : RoomManagerBase
     public override void SpawnRoom() {
         for (int i = 0; i < countRoom; i++)
         {
-            AddLandingRoom(spawnRoomPoints[i], pointSpawnLanchs[i]);
+            AddLandingRoom(spawnRoomPoints[i], pointSpawnLanchs[i], i);
         }
     }
-    public override void AddLandingRoom(Transform spawnLandingPoint, Transform spawnLanchPoint)
+    public override void AddLandingRoom(Transform spawnLandingPoint, Transform spawnLanchPoint, int indexRoom)
     {
         LandingPad newLandingPad = Instantiate(roomPrefab, spawnLandingPoint.position, Quaternion.identity, roomParent).GetComponent<LandingPad>();
         LanchPad newLanchPad = Instantiate(lanchPadPrefab, spawnLanchPoint.position, Quaternion.identity, roomParent).GetComponent<LanchPad>();
         newLanchPad.currentLanding = newLandingPad;
         landingPads.Add(newLandingPad);
-        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(indexRoom, RoomType.LandingRoom);
         if (roomID != -1)
         {
             newLandingPad.roomSetting.roomID = roomID;

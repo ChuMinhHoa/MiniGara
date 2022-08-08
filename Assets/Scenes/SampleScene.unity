@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3573,6 +3573,7 @@ MonoBehaviour:
   workerManager: {fileID: 2139413625}
   takeOffManager: {fileID: 1617516625}
   roomCount: 0
+  staffCount: 0
 --- !u!4 &1069812413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4373991969907444, guid: 1c3a468e1cdbae84c88c1ae6d5fcfccb, type: 3}
@@ -6391,6 +6392,13 @@ MonoBehaviour:
       roomTakeOffID: 
       roomFixID: 
       roomHouseID: 
+      totalRooms: 0
+    staffSaveData:
+      workerStaffs: []
+      planCareStaffs: []
+      workerID: 
+      plantCareID: 
+      totalStaff: 0
 --- !u!4 &1971698353
 Transform:
   m_ObjectHideFlags: 0

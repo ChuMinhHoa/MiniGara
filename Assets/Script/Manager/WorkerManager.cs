@@ -27,14 +27,14 @@ public class WorkerManager : RoomManagerBase
     {
         for (int i = 0; i < countRoom; i++)
         {
-            AddHouseRoom(spawnRoomPoints[i]);
+            AddHouseRoom(spawnRoomPoints[i], i);
         }
     }
-    public override void AddHouseRoom(Transform spawnPoint)
+    public override void AddHouseRoom(Transform spawnPoint, int indexRoom)
     {
         House newHouse = Instantiate(roomPrefab, spawnPoint.position, Quaternion.identity, roomParent).GetComponent<House>();
         houses.Add(newHouse);
-        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(indexRoom, RoomType.House);
         if (roomID != -1)
         {
             newHouse.roomSetting.roomID = roomID;

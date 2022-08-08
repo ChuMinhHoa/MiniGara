@@ -8,14 +8,14 @@ public class FixRoomManager : RoomManagerBase
     public override void SpawnRoom() {
         for (int i = 0; i < countRoom; i++)
         {
-            AddFixRoom(spawnRoomPoints[i]);
+            AddFixRoom(spawnRoomPoints[i], i);
         }
     }
-    public override void AddFixRoom(Transform spawnPoint)
+    public override void AddFixRoom(Transform spawnPoint, int indexRoom)
     {
         FixRoom newFixRoom = Instantiate(roomPrefab, spawnPoint.position, Quaternion.identity, roomParent).GetComponent<FixRoom>();
         fixRooms.Add(newFixRoom);
-        int roomID = ProfileManager.instance.playerData.GetRoomID(GameManager.instance.roomCount, RoomType.CarryRoom);
+        int roomID = ProfileManager.instance.playerData.GetRoomID(indexRoom, RoomType.FixRoom);
         if (roomID != -1)
         {
             newFixRoom.roomSetting.roomID = roomID;

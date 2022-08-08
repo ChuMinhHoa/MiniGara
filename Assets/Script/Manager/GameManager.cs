@@ -2,21 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : GenericSingleton<GameManager>
 {
-    public static GameManager instance;
     public CarryManager carryVehicleCarryManager;
     public LandingPadManager landingPadManager;
     public FixRoomManager fixRoomManager;
     public WorkerManager workerManager;
     public TakeOffManager takeOffManager;
     public int roomCount;
-    private void Awake()
-    {
-        instance = this;
-        SpawnRoom();
-    }
-    void SpawnRoom() {
+    public int staffCount;
+    public void SpawnRoom() {
         carryVehicleCarryManager.SpawnRoom();
         landingPadManager.SpawnRoom();
         fixRoomManager.SpawnRoom();
@@ -32,7 +27,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             Time.timeScale -= 2f;
-        }  
+        }
     }
     public bool CheckToCallVehicleBroke() {
         LandingPad landingPad = landingPadManager.GetLandingRoom();

@@ -1708,12 +1708,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d589832a2af1245abd0d78692d2afc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   state: 0
-  workTime: 4
+  currentState: 0
   able: 1
+  work: 0
+  workTime: 4
+  timeAble: 0.25
   agent: {fileID: 1376313357741654233}
-  target: {x: 0, y: 0, z: 0}
-  timeAbleDefault: 5
+  waitingPoint:
+    point: {fileID: 0}
+    able: 1
   rotageCurve:
     serializedVersion: 2
     m_Curve:
@@ -1739,6 +1744,11 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   targetRotage: {fileID: 0}
+  staffSetting:
+    staffType: 0
+    staffID: 0
+    staffModelsPos: []
+  staffDataAsset: {fileID: 11400000, guid: 5d5e4cb1d31ca9c42983928c718893f4, type: 2}
 --- !u!65 &7300446289553585902
 BoxCollider:
   m_ObjectHideFlags: 0

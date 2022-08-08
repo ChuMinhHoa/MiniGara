@@ -67,6 +67,10 @@ public enum TakeOffRoomState {
     Drop,
     TakeOff
 }
+public enum StaffType { 
+    Worker,
+    Planter
+}
 #region Model Type
 public enum FixRoomModelType { 
     FixRoom_Energy,
@@ -95,5 +99,20 @@ public enum TakeOffModelType
 {
     TakeOff_Elevator,
     TakeOff_Led
+}
+#endregion
+#region Staff Model
+public enum WorkerModelType {
+    Worker_Bag,
+    Worker_Hair
+}
+public enum PlantCareModelType {
+    Bag,
+    Hair
+}
+#endregion
+#region UI
+public enum UIPanelType {
+    UpgradePanel
 }
 #endregion
