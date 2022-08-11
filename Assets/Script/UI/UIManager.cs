@@ -6,7 +6,17 @@ public class UIManager : GenericSingleton<UIManager>
 {
     Dictionary<UIPanelType, GameObject> uiPanels = new Dictionary<UIPanelType, GameObject>();
     [SerializeField] Transform canvasMainTransform;
-    public void ShowUpgradePanel() { }
+    public bool isPopup;
+    public void ShowUpgradePanel(IRoomControler roomControler) {
+        isPopup = true;
+        GameObject panelUpgrade = GetUIPanel(UIPanelType.UpgradePanel);
+        panelUpgrade.SetActive(true);
+        panelUpgrade.GetComponent<UIUpgrade>().InitData(roomControler);
+    }
+    public void CloseUpgradePanel() {
+        isPopup = false;
+        GetUIPanel(UIPanelType.UpgradePanel).SetActive(false);
+    }
     public void RegisterPanel(UIPanelType uiPanelType, GameObject obj) {
         GameObject go = null;
         if (!uiPanels.TryGetValue(uiPanelType, out go))
@@ -32,6 +42,6 @@ public class UIManager : GenericSingleton<UIManager>
             if (panelReturn) panelReturn.SetActive(true);
             return panelReturn;
         }
-        return null;
+        return uiPanels[type];
     }
 }

@@ -256,6 +256,7 @@ public class PlayerData
 {
     public RoomSaveData roomSaveData;
     public StaffSaveData staffSaveData;
+    public int money;
     public void InitData() {
         Debug.Log("Init Data!");
     }
@@ -265,7 +266,8 @@ public class PlayerData
         {
             PlayerData dataSave = JsonUtility.FromJson<PlayerData>(jsonData);
             roomSaveData = dataSave.roomSaveData;
-            staffSaveData = dataSave.staffSaveData; 
+            staffSaveData = dataSave.staffSaveData;
+            money = dataSave.money;
             Debug.Log("Load Data");
         }
         GameManager.instance.SpawnRoom();
@@ -371,4 +373,6 @@ public class PlayerData
         PlayerPrefs.SetString("PlayerData", JsonUtility.ToJson(this).ToString());
     }
     public string GetData() { return PlayerPrefs.GetString("PlayerData"); }
+    public void ConbineMoney(int value) { money -= value; }
+    public void ConsumeMoney(int value) { money += value; }
 }

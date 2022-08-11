@@ -13,26 +13,32 @@ MonoBehaviour:
   m_Name: LandingRoom Data Asset
   m_EditorClassIdentifier: 
   datas:
+  - name: Monitor
+    type: 0
+    models3D:
+    - {fileID: 4194712893538367178, guid: f6ac70e1df7d69443819f3e6ec42a01e, type: 3}
+    - {fileID: 7287575798196198435, guid: 805e786ef357923428dfa274158a4987, type: 3}
+    - {fileID: 5445429375875936365, guid: be7ed55bce9d272469ca39252f57ff9b, type: 3}
+    - {fileID: 300118580349944131, guid: 77af3991d7fdd7b4d99b54169cb95066, type: 3}
+    upgradePrices: 64000000c80000002c01000090010000
+    energies: 02000000020000000300000004000000
+    moneyEarns: 05000000050000000a0000000f000000
+    sprUI: {fileID: 21300000, guid: facb75a466057284887407954c034285, type: 3}
+  - name: Elevator
+    type: 2
+    models3D:
+    - {fileID: 3679531298002338653, guid: 8f1c73f35629596439d23e70b836e476, type: 3}
+    upgradePrices: 00000000
+    energies: 04000000
+    moneyEarns: 0a000000
+    sprUI: {fileID: 21300000, guid: d036cf4579b63644da75d27929339e36, type: 3}
   - name: LED
     type: 1
     models3D:
     - {fileID: 1576825037052917044, guid: 67476e8accbd0a944bb3e4ce21117d17, type: 3}
     - {fileID: 746812769183836976, guid: 52a39964a46b8c047966aa4ad813a66f, type: 3}
     - {fileID: 9160839904767511294, guid: 4f3bc766b3f133b4a806906a894c4afe, type: 3}
-    upgradePrices: 000000000000000000000000
-    sprUI: {fileID: 0}
-  - name: Elevator
-    type: 2
-    models3D:
-    - {fileID: 3679531298002338653, guid: 8f1c73f35629596439d23e70b836e476, type: 3}
-    upgradePrices: 00000000
-    sprUI: {fileID: 0}
-  - name: Monitor
-    type: 0
-    models3D:
-    - {fileID: 5445429375875936365, guid: be7ed55bce9d272469ca39252f57ff9b, type: 3}
-    - {fileID: 7287575798196198435, guid: 805e786ef357923428dfa274158a4987, type: 3}
-    - {fileID: 4194712893538367178, guid: f6ac70e1df7d69443819f3e6ec42a01e, type: 3}
-    - {fileID: 300118580349944131, guid: 77af3991d7fdd7b4d99b54169cb95066, type: 3}
-    upgradePrices: 00000000000000000000000000000000
-    sprUI: {fileID: 0}
+    upgradePrices: 2c01000090010000f4010000
+    energies: 030000000300000005000000
+    moneyEarns: 05000000050000000a000000
+    sprUI: {fileID: 21300000, guid: ef5c94b3f770b244aa964edba767859c, type: 3}

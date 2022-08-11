@@ -13,22 +13,16 @@ MonoBehaviour:
   m_Name: FixRoom Data Asset
   m_EditorClassIdentifier: 
   datas:
-  - name: Table
-    type: 2
-    models3D:
-    - {fileID: 8511141059490933612, guid: aece32ec72af5f849a1e37593745a4eb, type: 3}
-    - {fileID: 8023114860183864139, guid: c0728080ea952e348a90c98b6c830988, type: 3}
-    - {fileID: 1811927503751945712, guid: f355aa14e2ad06140b9deca03ad5e189, type: 3}
-    upgradePrices: 000000000000000000000000
-    sprUI: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   - name: Energy
     type: 0
     models3D:
     - {fileID: 889671017720283354, guid: 5d25f5e5d49cc314babf2aada639abc8, type: 3}
     - {fileID: 1010750251514774945, guid: 863367ffbfcc3b3438a2f5659fbdd4ae, type: 3}
     - {fileID: 7338870488996276132, guid: b9cc62d7e1f358343a57fea3bac9b18f, type: 3}
-    upgradePrices: 000000000000000000000000
-    sprUI: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+    upgradePrices: 2c0100002c01000090010000
+    energies: 0a0000000a0000000f000000
+    moneyEarns: 0f000000140000001e000000
+    sprUI: {fileID: 21300000, guid: f9ecebc5a2bba7a4b96023fc4eaaec18, type: 3}
   - name: Tool
     type: 1
     models3D:
@@ -36,5 +30,18 @@ MonoBehaviour:
     - {fileID: 5321669282691875138, guid: e9c9586b7ada95749a9ba8119124a37e, type: 3}
     - {fileID: 6111236620932294321, guid: 90d6f2e339e0f9e45b55b6d26490a5a6, type: 3}
     - {fileID: 8679261361581544753, guid: 44973e79389ff2d4f83a00ab0b493f5a, type: 3}
-    upgradePrices: 00000000000000000000000000000000
-    sprUI: {fileID: 0}
+    upgradePrices: c8000000c80000002c0100005e010000
+    energies: 01000000010000000100000002000000
+    moneyEarns: 0a0000000a000000140000001e000000
+    sprUI: {fileID: 21300000, guid: abff71b8441718c42a7a04639b0faa63, type: 3}
+  - name: Table
+    type: 2
+    models3D:
+    - {fileID: 8511141059490933612, guid: aece32ec72af5f849a1e37593745a4eb, type: 3}
+    - {fileID: 8023114860183864139, guid: c0728080ea952e348a90c98b6c830988, type: 3}
+    - {fileID: 1811927503751945712, guid: f355aa14e2ad06140b9deca03ad5e189, type: 3}
+    upgradePrices: 0a000000140000001e000000
+    energies: 000000000000000000000000
+    moneyEarns: 05000000050000000a000000
+    sprUI: {fileID: 21300000, guid: b449e7b6c5d168240bf7cff4c4f692b4, type: 3}
+  comfortable: 010000000100000005000000

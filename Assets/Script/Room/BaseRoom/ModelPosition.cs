@@ -9,4 +9,5 @@ public class ModelPosition<Enum>
     public Transform rootObject;
     [HideInInspector]
     public Transform currentModel;
+    public Transform camPos;
 }

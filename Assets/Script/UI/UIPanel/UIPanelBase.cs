@@ -9,4 +9,5 @@ public class UIPanelBase : MonoBehaviour
     public virtual void Awake() {
         if (isRegisterOnUI) UIManager.instance.RegisterPanel(uiPanelType, gameObject);
     }
+    public virtual void OnClose() { }
 }
