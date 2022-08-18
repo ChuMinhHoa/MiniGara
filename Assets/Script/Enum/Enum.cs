@@ -47,6 +47,13 @@ public enum FixRoomState
     BackAndSp,
     FixedDone
 }
+public enum HouseRoomState { 
+    Idle,
+    FreeTime,
+    SleepTime,
+    EatTime,
+    WorkTime
+}
 public enum RoomType { 
     LandingRoom,
     FixRoom,
@@ -58,7 +65,9 @@ public enum StaffState {
     Idle,
     Move,
     Work,
-    Rotage
+    Rotage,
+    Sleep,
+    FreeTime
 }
 public enum TakeOffRoomState { 
     Idle,
@@ -114,5 +123,17 @@ public enum PlantCareModelType {
 #region UI
 public enum UIPanelType {
     UpgradePanel
+}
+#endregion
+#region TimeManager
+public enum BehaviorType { 
+    Eat,
+    Work,
+    FreeTime,
+    Sleep
+}
+public enum FreeBehavior { 
+    Talking,
+    WatchTV
 }
 #endregion

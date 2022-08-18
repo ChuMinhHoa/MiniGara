@@ -6,6 +6,7 @@ public class UIManager : GenericSingleton<UIManager>
 {
     Dictionary<UIPanelType, GameObject> uiPanels = new Dictionary<UIPanelType, GameObject>();
     [SerializeField] Transform canvasMainTransform;
+    public UITimePanel timePanel;
     public bool isPopup;
     public void ShowUpgradePanel(IRoomControler roomControler) {
         isPopup = true;

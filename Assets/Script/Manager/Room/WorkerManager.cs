@@ -52,4 +52,8 @@ public class WorkerManager : RoomManagerBase
         RotageAffterSpawn(newHouse.transform);
         GameManager.instance.roomCount++;
     }
+    public void CommandToHouse(HouseRoomState houseState) {
+        for (int i = 0; i < houses.Count; i++)
+            houses[i].ChangeState(houseState);
+    }
 }

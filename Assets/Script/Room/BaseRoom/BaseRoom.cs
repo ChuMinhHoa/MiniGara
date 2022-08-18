@@ -32,7 +32,7 @@ public class BaseRoom<T> : MonoBehaviour, IRoomControler
     public void OnLoadRoom() {
         LoadFromSaveData(ProfileManager.instance.playerData.GetRoomData<T>(roomSetting.roomID, roomSetting.roomType));
     }
-    void LoadFromSaveData(BaseRoomSetting<T> saveRoom) {
+    public virtual void LoadFromSaveData(BaseRoomSetting<T> saveRoom) {
         for (int i = 0; i < roomSetting.modelPositions.Count; i++)
         {
             ModelPosition<T> model = roomSetting.modelPositions[i];

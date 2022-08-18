@@ -11,6 +11,7 @@ public class GameManager : GenericSingleton<GameManager>
     public WorkerManager workerManager;
     public TakeOffManager takeOffManager;
     public CameraManager cameraManager;
+    public TimeLineManager timeLineManager;
     public int roomCount;
     public int staffCount;
     public IRoomControler currentRoomSelected;
@@ -23,10 +24,6 @@ public class GameManager : GenericSingleton<GameManager>
         workerManager.SpawnRoom();
         takeOffManager.SpawnRoom();
     }
-    private void Start()
-    {
-       
-    }
     private void Update()
     {
         //if (Input.GetKeyDown(KeyCode.N))
@@ -37,6 +34,7 @@ public class GameManager : GenericSingleton<GameManager>
         //{
         //    Time.timeScale -= 2f;
         //}
+        timeLineManager.Update();
         if (Input.GetMouseButtonDown(0))
         {
             isTouching = !UIManager.instance.isPopup && !EventSystem.current.IsPointerOverGameObject();
@@ -77,6 +75,8 @@ public class GameManager : GenericSingleton<GameManager>
         }
     }
     public bool CheckToCallVehicleBroke() {
+        if (!timeLineManager.workerTime)
+            return false;
         LandingPad landingPad = landingPadManager.GetLandingRoom();
         if (landingPad == null)
             return false;

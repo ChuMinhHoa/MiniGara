@@ -19,13 +19,14 @@ public class StaffBase<T> : MonoBehaviour
     float timeAbleDefault = .25f;
     [Header("NAVMESH")]
     public NavMeshAgent agent;
-    Vector3 target;
+    public Vector3 target;
     public WaitingPoint waitingPoint;
-    UnityAction actionMoveDone;
-    UnityAction actionWorkDone;
+    public UnityAction actionMoveDone;
+    public UnityAction actionWorkDone;
     [Header("ROTAGE")]
     public AnimationCurve rotageCurve;
     public Transform targetRotage;
+    public Quaternion sleepRotage;
     float timeRotage;
     Quaternion rotageFrom;
     Quaternion rotageTo;
@@ -33,6 +34,70 @@ public class StaffBase<T> : MonoBehaviour
     [Header("DATA")]
     public StaffSetting<T> staffSetting;
     public StaffDataAsset<T> staffDataAsset;
+    [Header("Behavior")]
+    public bool sleepTime;
+    public bool freeTime;
+    public bool eatTime;
+    protected StateMachine<StaffBase<T>> m_Statemachine;
+    public StateMachine<StaffBase<T>> stateMachine { get { return m_Statemachine; } }
+    private void Awake()
+    {
+        m_Statemachine = new StateMachine<StaffBase<T>>(this);
+        m_Statemachine.SetcurrentState(StaffIdle<T>.instance);
+        m_Statemachine.SetcurrentState(StaffIdle<T>.instance);
+        anim = GetComponent<Animator>();
+    }
+    private void Update()
+    {
+        stateMachine.Update();
+        switch (state)
+        {
+            case StaffState.Idle:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffIdle<T>.instance);
+                }
+                break;
+            case StaffState.Move:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffMove<T>.instance);
+                }
+                break;
+            case StaffState.Rotage:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffRotage<T>.instance);
+                }
+                break;
+            case StaffState.Work:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffWork<T>.instance);
+                }
+                break;
+            case StaffState.Sleep:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffSleep<T>.instance);
+                }
+                break;
+            case StaffState.FreeTime:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffFreeTime<T>.instance);
+                }
+                break;
+            default:
+                break;
+        }
+    }
     public void OnLoadStaff() {
         LoadFromSaveData(ProfileManager.instance.playerData.GetStaffData<T>(staffSetting.staffID, staffSetting.staffType));
     }
@@ -148,6 +213,13 @@ public class StaffBase<T> : MonoBehaviour
     }
     public void ResetWorker()
     {
+        if (!GameManager.instance.timeLineManager.workerTime)
+        {
+            actionWorkDone = null;
+            actionMoveDone = null;
+            able = false;
+            return;
+        }
         actionWorkDone = null;
         actionMoveDone = null;
         StartCoroutine(IE_ResetAble(timeAble));
@@ -168,6 +240,8 @@ public class StaffBase<T> : MonoBehaviour
     }
     public bool IsFinishMoveOnNavemesh()
     {
+        if (!agent.isActiveAndEnabled)
+            return true;
         if (!agent.pathPending)
         {
             if (agent.remainingDistance <= agent.stoppingDistance)
@@ -180,6 +254,18 @@ public class StaffBase<T> : MonoBehaviour
         }
         return false;
     }
+
+    #region Sleep
+    public virtual void StaffSleepEnter() { }
+    public virtual void StaffSleepExecute() { }
+    public virtual void StaffSleepEnd() { }
+    #endregion
+
+    #region FreeTime
+    public virtual void StaffFreeTimeEnter() { }
+    public virtual void StaffFreeTimeExecute() { }
+    public virtual void StaffFreeTimeEnd() { }
+    #endregion
 }
 public class StaffIdle<T> : State<StaffBase<T>>
 {
@@ -199,11 +285,11 @@ public class StaffIdle<T> : State<StaffBase<T>>
     }
     public override void End(StaffBase<T> go)
     {
-        go.StaffIdleExecute();
+        go.StaffIdleEnd();
     }
     public override void Execute(StaffBase<T> go)
     {
-        go.StaffIdleEnd();
+        go.StaffIdleExecute();
     }
 }
 public class StaffMove<T> : State<StaffBase<T>>
@@ -279,5 +365,53 @@ public class StaffWork<T> : State<StaffBase<T>>
     public override void Execute(StaffBase<T> go)
     {
         go.StaffWorkExecute();
+    }
+}
+public class StaffSleep<T> : State<StaffBase<T>> {
+    private static StaffSleep<T> m_Instance;
+    public static StaffSleep<T> instance
+    {
+        get {
+            if (m_Instance == null)
+                m_Instance = new StaffSleep<T>();
+            return m_Instance;
+        }
+    }
+    public override void Enter(StaffBase<T> go)
+    {
+        go.StaffSleepEnter();
+    }
+    public override void Execute(StaffBase<T> go)
+    {
+        go.StaffSleepExecute();
+    }
+    public override void End(StaffBase<T> go)
+    {
+        go.StaffSleepEnd();
+    }
+}
+public class StaffFreeTime<T> : State<StaffBase<T>>
+{
+    private static StaffFreeTime<T> m_Instance;
+    public static StaffFreeTime<T> instance
+    {
+        get
+        {
+            if (m_Instance == null)
+                m_Instance = new StaffFreeTime<T>();
+            return m_Instance;
+        }
+    }
+    public override void Enter(StaffBase<T> go)
+    {
+        go.StaffFreeTimeEnter();
+    }
+    public override void Execute(StaffBase<T> go)
+    {
+        go.StaffFreeTimeExecute();
+    }
+    public override void End(StaffBase<T> go)
+    {
+        go.StaffFreeTimeEnd();
     }
 }
