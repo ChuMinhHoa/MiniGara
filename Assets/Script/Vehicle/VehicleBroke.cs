@@ -8,10 +8,10 @@ public class VehicleBroke : VehicleBase
 {
     [Header("Room")]
     [Header("===========VEHICLE BROKE==============")]
-    public TakeOffRoom myTakeOffRoom;
-    public BrokenRoom myBrokenRoom;
+    [HideInInspector]public TakeOffRoom myTakeOffRoom;
+    [HideInInspector]public BrokenRoom myBrokenRoom;
     public LandingPad myLandingPad;
-    public LanchPad myLanchPad;
+    [HideInInspector]public LanchPad myLanchPad;
     [Header("Vector")]
     public Vector3 pointLanding;
     public Vector3 offset;
@@ -20,16 +20,24 @@ public class VehicleBroke : VehicleBase
     [Header("Transform And GameObject")]
     [SerializeField] Transform bootersTransform;
     [SerializeField] GameObject bootersVFX;
-    [SerializeField] Transform pointDropCharactor;
+    [SerializeField] Transform pointCharactorControl;
+    [SerializeField] CustomerBase customPreb;
     [Header("Other")]
     public AnimationCurve curveTakeOff;
-    public AnimationCurve curveOpenWindown;
     UnityAction actionDone;
     public float speed;
     public float smooth;
     bool canTakeOffNow;
     bool rotageWindownDone = false;
     float timeCurve;
+    public override void Awake()
+    {
+        base.Awake();
+        CustomerBase newCus = Instantiate(customPreb, transform.position, Quaternion.identity, pointCharactorControl);
+        myCharactor = newCus;
+        newCus.transform.localPosition = new Vector3(0, 0, 0);
+        newCus.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+    }
     public override void IdleEnter()
     {
         anim.Play("Idle");
@@ -97,7 +105,7 @@ public class VehicleBroke : VehicleBase
         }
         transform.position = Vector3.SmoothDamp(transform.position, pointLanding + offset, ref vel, smooth);
         if (Vector3.Distance(transform.position, pointLanding + offset) <= 0.1f)
-            vehicleState = VehicleState.OnLand;
+            vehicleState = VehicleState.OpenWindown;
     }
     public override void LandingEnd()
     {
@@ -114,7 +122,7 @@ public class VehicleBroke : VehicleBase
     #region ===============OpenWindown===============
     public override void OpenWindownEnter()
     {
-        anim.Play("RotageWinDown");
+        anim.Play("OpenWinDown");
         rotageWindownDone = false;
     }
     public override void OpenWindownExecute()
@@ -122,16 +130,16 @@ public class VehicleBroke : VehicleBase
         if (rotageWindownDone)
         {
             myLandingPad.ChangeState(LandingPadState.CallWorker);
+            vehicleState = VehicleState.OnLand;
         }
     }
-    public void RotageWindownDone() {
-        if (myCharactor == null) rotageWindownDone = true; 
-    }
+    public void RotageWindownDone() { rotageWindownDone = true;  }
     public void PushCharactorDown() {
-        if (myCharactor != null) {
-            myCharactor.transform.parent = null;
-            myCharactor.transform.position = pointDropCharactor.position;
-        }
+        myCharactor.transform.parent = null;
+        Vector3 point = myLandingPad.pointDropCustomer.position;
+        myCharactor.transform.position = point;
+        Debug.Log(point + " " + myCharactor.transform.position);
+        //myCharactor.ChangeState(CustomerState.Idle);
     }
     #endregion
     #region TakeOff

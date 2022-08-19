@@ -19,6 +19,7 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     public Transform landingEndPosition;
     public Transform playerHandlePoint;
     public Transform monitorTransform;
+    public Transform pointDropCustomer;
     [SerializeField] Transform negotiateCusPoint;
     [SerializeField] Transform negotiateWorkerPoint;
     public GameObject elevator;

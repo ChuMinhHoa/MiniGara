@@ -8,18 +8,18 @@ public class VehicleBase : MonoBehaviour
 {
     public StateMachine<VehicleBase> stateMachine { get { return m_stateMachine; } }
     protected StateMachine<VehicleBase> m_stateMachine;
-    public Animator anim;
-    public VehicleState vehicleState;
+    [HideInInspector]public Animator anim;
+    [HideInInspector]public VehicleState vehicleState;
     VehicleState currentState;
-    public NavMeshAgent agent;
-    public NavMeshObstacle obstacle;
-    public Vector3 targetToMove;
-    public CharacterController myCharactor;
-    public bool able = true;
+    [HideInInspector]public NavMeshAgent agent;
+    //public NavMeshObstacle obstacle;
+    [HideInInspector]public Vector3 targetToMove;
+    public CustomerBase myCharactor;
+    [HideInInspector]public bool able = true;
     public AnimationCurve rotageToRightWay;
-    public float timeRotage = 0f;
-    public Quaternion rotageTo;
-    public Quaternion rotageFrom;
+    [HideInInspector]public float timeRotage = 0f;
+    [HideInInspector]public Quaternion rotageTo;
+    [HideInInspector]public Quaternion rotageFrom;
     public virtual void Awake()
     {
         m_stateMachine = new StateMachine<VehicleBase>(this);
@@ -50,6 +50,13 @@ public class VehicleBase : MonoBehaviour
                 {
                     currentState = vehicleState;
                     stateMachine.ChangeState(VehicleLanding.instance);
+                }
+                break;
+            case VehicleState.OpenWindown:
+                if (currentState != vehicleState)
+                {
+                    currentState = vehicleState;
+                    stateMachine.ChangeState(VehicleWindownOpen.instance);
                 }
                 break;
             case VehicleState.Rotage:
@@ -85,7 +92,7 @@ public class VehicleBase : MonoBehaviour
     public virtual void MoveEnd() { }
 
     #region Broken vehicle
-    public virtual void LandingEnter() { }
+    public virtual void LandingEnter() { anim.Play("OnLand"); }
     public virtual void LandingExecute() { }
     public virtual void LandingEnd() { }
     public virtual void ChangeLandingPad(LandingPad landingPadChange, LanchPad lanchPad) { }

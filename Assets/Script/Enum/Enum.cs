@@ -14,7 +14,8 @@ public enum VehicleState
     Landing,
     Rotage,
     OnLand,
-    TakeOff
+    TakeOff,
+    OpenWindown
 }
 public enum LandingPadState { 
     Idle,

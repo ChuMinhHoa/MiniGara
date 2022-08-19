@@ -11,7 +11,7 @@ public class CustomerBase : MonoBehaviour
     [HideInInspector]
     public Animator anim;
     public CustomerState state;
-    CustomerState currentState;
+    CustomerState currentState = CustomerState.Idle;
     [HideInInspector]
     public Vector3 target;
     [HideInInspector]
@@ -67,10 +67,15 @@ public class CustomerBase : MonoBehaviour
                 break;
         }
     }
-    public virtual void OnVehicleEnter() { anim.Play("Drive"); }
+    public virtual void OnVehicleEnter() {
+        agent.enabled = false;
+        anim.Play("Drive"); 
+    }
     public virtual void OnVehicleExecute() { }
     public virtual void OnVehicleEnd() { }
-    public virtual void CustomerIdleEnter() { anim.Play("Idle"); }
+    public virtual void CustomerIdleEnter() {
+        agent.enabled = true;
+        anim.Play("Idle"); }
     public virtual void CustomerIdleExecute() { }
     public virtual void CustomerIdleEnd() { }
     public virtual void CustomerMoveEnter() { 
