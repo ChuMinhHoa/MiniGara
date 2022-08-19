@@ -26,14 +26,6 @@ public class GameManager : GenericSingleton<GameManager>
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    Time.timeScale += 2f;
-        //}
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    Time.timeScale -= 2f;
-        //}
         timeLineManager.Update();
         if (Input.GetMouseButtonDown(0))
         {
@@ -85,7 +77,5 @@ public class GameManager : GenericSingleton<GameManager>
             return false;
         return true;
     }
-    public int GetBuffAmountSpawnVehicleBroke() {
-        return 0;
-    }
+    public int GetBuffAmountSpawnVehicleBroke() {return 0; }
 }

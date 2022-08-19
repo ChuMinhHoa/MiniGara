@@ -1,19 +1,8 @@
-public enum PlayerState { 
-    Idle,
-    Drive,
-    Move,
-    MoveJoyStick
-}
-public enum MortoBikeState { 
-    Unusing,
-    StartUp,
+public enum CustomerState { 
+    OnVehicle,
     Idle,
     Move,
-    ShutDown
-}
-public enum EMode{ 
-    None,
-    Bike
+    Talk
 }
 public enum VehicleType {
     HoverCraft

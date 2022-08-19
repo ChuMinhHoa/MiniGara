@@ -19,6 +19,8 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     public Transform landingEndPosition;
     public Transform playerHandlePoint;
     public Transform monitorTransform;
+    [SerializeField] Transform negotiateCusPoint;
+    [SerializeField] Transform negotiateWorkerPoint;
     public GameObject elevator;
     [Header("STATE")]
     public LandingPadState state;
@@ -70,7 +72,6 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     public void LPIdleEnter() { }
     public void LPIdleExecute() { }
     public void LPIdleEnd() { }
-    
     public void CallWorkerEnter() { }
     public void CallWorkerExecute() {
         if (workerAble == null) {
@@ -94,7 +95,6 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     {
         elevatorStartPoint = elevator.transform.position;
     }
-    
     public void LaunchPadCallExecute()
     {
 
@@ -148,6 +148,8 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     {
         vehicleBroke = vehicleBrokeChange;
     }
+    public Transform GetCusPoint() { return negotiateCusPoint; }
+    public Transform GetWorkerPoint() { return negotiateWorkerPoint; }
 }
 public class LPadIdle : State<LandingPad>
 {

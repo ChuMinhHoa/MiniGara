@@ -8,10 +8,10 @@ public class VehicleBroke : VehicleBase
 {
     [Header("Room")]
     [Header("===========VEHICLE BROKE==============")]
-    public LandingPad myLandingPad;
-    public LanchPad myLanchPad;
     public TakeOffRoom myTakeOffRoom;
     public BrokenRoom myBrokenRoom;
+    public LandingPad myLandingPad;
+    public LanchPad myLanchPad;
     [Header("Vector")]
     public Vector3 pointLanding;
     public Vector3 offset;
@@ -20,13 +20,16 @@ public class VehicleBroke : VehicleBase
     [Header("Transform And GameObject")]
     [SerializeField] Transform bootersTransform;
     [SerializeField] GameObject bootersVFX;
+    [SerializeField] Transform pointDropCharactor;
     [Header("Other")]
+    public AnimationCurve curveTakeOff;
+    public AnimationCurve curveOpenWindown;
+    UnityAction actionDone;
     public float speed;
     public float smooth;
-    public AnimationCurve curveTakeOff;
     bool canTakeOffNow;
+    bool rotageWindownDone = false;
     float timeCurve;
-    UnityAction actionDone;
     public override void IdleEnter()
     {
         anim.Play("Idle");
@@ -98,9 +101,7 @@ public class VehicleBroke : VehicleBase
     }
     public override void LandingEnd()
     {
-        //call Player
         transform.parent = myLandingPad.elevator.transform;
-        myLandingPad.ChangeState(LandingPadState.CallWorker);
         bootersVFX.SetActive(false);
         anim.Play("OnLand");
     }
@@ -108,6 +109,29 @@ public class VehicleBroke : VehicleBase
     {
         myLandingPad = landingPadChange;
         myLanchPad = lanchPad;
+    }
+    #endregion
+    #region ===============OpenWindown===============
+    public override void OpenWindownEnter()
+    {
+        anim.Play("RotageWinDown");
+        rotageWindownDone = false;
+    }
+    public override void OpenWindownExecute()
+    {
+        if (rotageWindownDone)
+        {
+            myLandingPad.ChangeState(LandingPadState.CallWorker);
+        }
+    }
+    public void RotageWindownDone() {
+        if (myCharactor == null) rotageWindownDone = true; 
+    }
+    public void PushCharactorDown() {
+        if (myCharactor != null) {
+            myCharactor.transform.parent = null;
+            myCharactor.transform.position = pointDropCharactor.position;
+        }
     }
     #endregion
     #region TakeOff
@@ -140,6 +164,7 @@ public class VehicleBroke : VehicleBase
             }
         }
     }
+    public void TakeCharactorOn() { }
     #endregion
     void DestroySelf() {
         //myBrokenRoom.RemoveVehicleBroke(this);

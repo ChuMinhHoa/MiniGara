@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 560192030358094130}
   m_Layer: 0
-  m_Name: SofaPoint
+  m_Name: PointSeatDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,8 +24,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 560192030358094125}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.032, y: 0.435, z: 0.144}
+  m_LocalPosition: {x: -0.032, y: -0.004, z: 0.518}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8621438303669026088}
   m_RootOrder: 0
@@ -42,6 +43,7 @@ GameObject:
   - component: {fileID: 8629854279161112506}
   - component: {fileID: 8638204804977686480}
   - component: {fileID: 8598457503175849610}
+  - component: {fileID: -6741219916783586001}
   m_Layer: 0
   m_Name: Sofa_Level_3
   m_TagString: Untagged
@@ -59,6 +61,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 560192030358094130}
   m_Father: {fileID: 0}
@@ -83,6 +86,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -127,3 +131,17 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43808887373745156, guid: 2f088465c847d924c9b3c9c30b93c3f3, type: 2}
+--- !u!114 &-6741219916783586001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8624481062662013908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba4a300879742e4dbc3d0280b2a6552, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointSeatDown: {fileID: 560192030358094130}
+  sofaAble: 1

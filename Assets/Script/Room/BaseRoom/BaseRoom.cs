@@ -21,14 +21,7 @@ public class BaseRoom<T> : MonoBehaviour, IRoomControler
     public BaseRoomSetting<T> roomSetting;
     public RoomDataAsset<T> roomDataAsset;
     public List<WaitingPoint> waitingPoints;
-    public virtual WaitingPoint GetWaitingPoint() {
-        foreach (WaitingPoint point in waitingPoints)
-        {
-            if (point.able)
-                return point;
-        }
-        return null;
-    }
+    #region ==================LOAD DATA======================
     public void OnLoadRoom() {
         LoadFromSaveData(ProfileManager.instance.playerData.GetRoomData<T>(roomSetting.roomID, roomSetting.roomType));
     }
@@ -52,7 +45,7 @@ public class BaseRoom<T> : MonoBehaviour, IRoomControler
             }
         }
     }
-    public void LoadAffterUpgrade(Transform modelUPgrade, Transform rootTransform, int modelIndex) {
+    public virtual void LoadAffterUpgrade(Transform modelUPgrade, Transform rootTransform, int modelIndex) {
         if (rootTransform.childCount > 0)
             Destroy(rootTransform.GetChild(0).gameObject);
         Transform newModelTransform = Instantiate(modelUPgrade);
@@ -61,6 +54,29 @@ public class BaseRoom<T> : MonoBehaviour, IRoomControler
         newModelTransform.localPosition = Vector3.zero;
         newModelTransform.localEulerAngles = Vector3.zero;
         newModelTransform.localScale = new Vector3(1, 1, 1);
+    }
+    public void UpgradeItem(int index)
+    {
+        int level = 0;
+        Debug.Log("Item ID: " + index);
+        roomSetting.modelPositions[index].level++;
+        level = roomSetting.modelPositions[index].level;
+        roomSetting.modelPositions[index].currentModel = roomDataAsset.GetModelByType(roomSetting.modelPositions[index].type.ToString(), level);
+        ProfileManager.instance.playerData.SaveRoomData<T>(roomSetting);
+        Transform modelUpgrade = roomSetting.modelPositions[index].currentModel;
+        Transform rootTrs = roomSetting.modelPositions[index].rootObject;
+        LoadAffterUpgrade(modelUpgrade, rootTrs, index);
+    }
+    #endregion
+    #region ==========GET DATA====================
+    public virtual WaitingPoint GetWaitingPoint()
+    {
+        foreach (WaitingPoint point in waitingPoints)
+        {
+            if (point.able)
+                return point;
+        }
+        return null;
     }
     public int GetTotalModel() {
         return roomSetting.modelPositions.Count;
@@ -111,15 +127,5 @@ public class BaseRoom<T> : MonoBehaviour, IRoomControler
     public Vector3 GetCamPos(int index) {
         return roomSetting.modelPositions[index].camPos.position;
     }
-    public void UpgradeItem(int index) {
-        int level = 0;
-        Debug.Log("Item ID: "+index);
-        roomSetting.modelPositions[index].level++;
-        level = roomSetting.modelPositions[index].level;
-        roomSetting.modelPositions[index].currentModel = roomDataAsset.GetModelByType(roomSetting.modelPositions[index].type.ToString(), level);
-        ProfileManager.instance.playerData.SaveRoomData<T>(roomSetting);
-        Transform modelUpgrade = roomSetting.modelPositions[index].currentModel;
-        Transform rootTrs = roomSetting.modelPositions[index].rootObject;
-        LoadAffterUpgrade(modelUpgrade, rootTrs, index);
-    }
+    #endregion
 }

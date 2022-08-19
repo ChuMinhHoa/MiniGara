@@ -533,7 +533,6 @@ MonoBehaviour:
   pointCallSleep: {fileID: 2497554463861350423}
   pointOpenDoor: {fileID: 2497554464059659311}
   window: {fileID: 2502130260805514609}
-  sofarPoint: {fileID: 0}
   doorRotage: {fileID: 2496779385233124913}
   pointTalkings:
   - {fileID: 2070662357524617658}
@@ -1048,7 +1047,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5280338657168352063}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.4, y: 0, z: -5.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1141,7 +1140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6872425357072075099}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.19, y: 0, z: -5.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

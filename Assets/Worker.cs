@@ -13,9 +13,11 @@ public class Worker : StaffBase<WorkerModelType>
     public Queue<FreeBehavior> freetimeBehaviors = new Queue<FreeBehavior>();
     int countTalkTime;
     Action freeTimeModeDone;
+    Vector3 behaviorPoint;
     #region ====================Sleep=================
     public override void StaffSleepEnter()
     {
+        agent.enabled = true;
         target = myHouse.pointCallSleep.position;
         agent.isStopped = false;
         agent.SetDestination(target);
@@ -40,6 +42,7 @@ public class Worker : StaffBase<WorkerModelType>
     public override void StaffFreeTimeEnter()
     {
         FreeTimeModeSetting();
+        agent.speed = 0.5f;
     }
     public override void StaffFreeTimeExecute()
     {
@@ -52,24 +55,30 @@ public class Worker : StaffBase<WorkerModelType>
                 FreeTimeModeSetting();
                 return;
             }
-            Vector3 point;
+            
             switch (currentBehavior)
             {
                 case FreeBehavior.Talking:
                     countTalkTime = 0;
-                    point = myHouse.GetPointTalking(myHouse.GetCurrentPointIndex());
+                    myHouse.SetCurrentPointIndex(0);
+                    behaviorPoint = myHouse.GetPointTalking(myHouse.GetCurrentPointIndex());
                     actionMoveDone = Talking;
                     myHouse.IncreaseCurrentPointIndex();
+                    agent.enabled = true;
                     agent.isStopped = false;
-                    agent.SetDestination(point);
+                    agent.SetDestination(behaviorPoint);
+                    anim.Play("Walking");
                     break;
                 case FreeBehavior.WatchTV:
                     if (CheckAbleFreeTimeBehaviour(FreeBehavior.WatchTV))
                     {
-                        point = myHouse.GetPointTalking(myHouse.GetCurrentPointIndex());
+                        behaviorPoint = myHouse.GetPointSofar();
+                        myHouse.SetSofaPoint(false);
                         actionMoveDone = WatchingTV;
+                        agent.enabled = true;
                         agent.isStopped = false;
-                        agent.SetDestination(point);
+                        agent.SetDestination(behaviorPoint);
+                        anim.Play("Walking");
                     }
                     else
                     {
@@ -82,6 +91,8 @@ public class Worker : StaffBase<WorkerModelType>
             }
             freeTime = true;
         }
+        if (agent.enabled == false)
+            return;
         if (IsFinishMoveOnNavemesh())
         {
             agent.isStopped = true;
@@ -98,28 +109,37 @@ public class Worker : StaffBase<WorkerModelType>
         }
         return false;
     }
-    public override void StaffFreeTimeEnd()
-    {
-        freeTime = false;
-    }
+    public override void StaffFreeTimeEnd(){ freeTime = false; }
     void Talking()
     {
+        Vector3 pointRotageTo = myHouse.GetOtherPoint();
+        pointRotageTo.y = transform.position.y;
+        Quaternion rotage = Quaternion.LookRotation(pointRotageTo - transform.position, Vector3.up);
+        transform.rotation = rotage;
         int talkAnim = UnityEngine.Random.Range(1, 3);
         anim.Play("Talking_" + talkAnim.ToString());
     }
     void WatchingTV() {
+        agent.enabled = false;
+        transform.position = behaviorPoint;
         anim.SetTrigger("WatchTV");
+        Vector3 pointRotageTo = myHouse.GetRootTransform(HouseModelType.House_TV);
+        pointRotageTo.y = transform.position.y;
+        Quaternion rotage = Quaternion.LookRotation(pointRotageTo - transform.position, Vector3.up);
+        transform.rotation = rotage;
+        
     }
     #endregion
     #region =============Anim function==============
     public void WatchTVDone()
     {
         freeTime = false;
+        myHouse.SetSofaPoint(true);
     }
     public void TalkingDone()
     {
         countTalkTime++;
-        if (countTalkTime == 3)
+        if (countTalkTime == 2)
             freeTime = false;
     }
     #endregion
@@ -138,18 +158,17 @@ public class Worker : StaffBase<WorkerModelType>
         able = false;
         agent.enabled = true;
         int maxBehaviour = Enum.GetNames(typeof(FreeBehavior)).Length;
+        
         for (int i = 0; i < 10; i++)
         {
-            int randomBeha = UnityEngine.Random.Range(0,maxBehaviour);
+            int randomBeha = UnityEngine.Random.Range(0, maxBehaviour);
             switch (randomBeha)
             {
                 case 0:
                     freetimeBehaviors.Enqueue(FreeBehavior.Talking);
-                    Debug.Log("Talking");
                     break;
                 case 1:
                     freetimeBehaviors.Enqueue(FreeBehavior.WatchTV);
-                    Debug.Log("Watch TV");
                     break;
                 default:
                     break;

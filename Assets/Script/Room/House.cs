@@ -82,67 +82,7 @@ public class House : BaseRoom<HouseModelType>
                 break;
         }
     }
-    #region =======================Data Control=============================
-    public override void LoadFromSaveData(BaseRoomSetting<HouseModelType> saveRoom)
-    {
-        base.LoadFromSaveData(saveRoom);
-        for (int i = 0; i < roomSetting.modelPositions.Count; i++)
-        {
-            ModelPosition<HouseModelType> model = roomSetting.modelPositions[i];
-            if (model.type == HouseModelType.House_Bed)
-                bedInRoom = roomSetting.modelPositions[i].rootObject.GetChild(0).GetComponent<Bed>();
-            if (model.type == HouseModelType.House_Sofa)
-            {
-                if(roomSetting.modelPositions[i].rootObject.childCount>0) 
-                    sofaInRoom = roomSetting.modelPositions[i].rootObject.GetChild(0).GetComponent<Sofa>();
-            }
-        }
-    }
-    public void ChangeState(HouseRoomState houseRoomState) { state = houseRoomState; }
-    public Vector3 GetSleepPoint()
-    {
-        return bedInRoom.GetSleepPoint();
-    }
-    public Worker GetWorker()
-    {
-        foreach (Worker worker in workers)
-        {
-            if (worker.able)
-            {
-                worker.able = false;
-                return worker;
-            }
-        }
-        return null;
-    }
-    public void ResetBed() { bedInRoom.ResetBed(); }
-    void InstanceWorker()
-    {
-        for (int i = 0; i < currentAmountWorker; i++)
-        {
-            Worker workerNew = Instantiate(workerPrefab, pointOpenDoor.position, Quaternion.identity).GetComponent<Worker>();
-            workers.Add(workerNew);
-            workerNew.ChangeHouse(this);
-            int staffID = ProfileManager.instance.playerData.GetStaffID(i, StaffType.Worker);
-            if (staffID != -1)
-            {
-                workerNew.staffSetting.staffID = staffID;
-                workerNew.OnLoadStaff();
-                Debug.Log("Load Worker ID:" + staffID + " Data");
-            }
-            else
-            {
-                ProfileManager.instance.playerData.AddStaffID(StaffType.Worker);
-                workerNew.staffSetting.staffID = GameManager.instance.staffCount;
-                ProfileManager.instance.playerData.SaveStaffData<WorkerModelType>(workerNew.staffSetting);
-                workerNew.OnLoadStaff();
-                Debug.Log("Create Worker ID:" + workerNew.staffSetting.staffID + " Data");
-            }
-            GameManager.instance.staffCount++;
-        }
-        ProfileManager.instance.playerData.SaveData();
-    }
-    #endregion
+  
     #region Command
     void CommandSleep()
     {
@@ -213,17 +153,105 @@ public class House : BaseRoom<HouseModelType>
     public void WorkTimeExecute() { }
     public void WorkTimeEnd() { }
     #endregion
-    int GetLevelOfTV() {
-        return roomSetting.GetLevelOfModelPosition(HouseModelType.House_Bed.ToString());
-    }
+    int GetLevelOfTV() { return roomSetting.GetLevelOfModelPosition(HouseModelType.House_Bed.ToString()); }
     public bool CheckBehaviorWatchTV() {
-        return GetLevelOfTV() > 1 && sofaInRoom.GetSofaAble();
+        if (sofaInRoom == null)
+            return false;
+        return GetLevelOfTV() > 0 && sofaInRoom.GetSofaAble(); 
     }
-    public Vector3 GetPointTalking(int index) {
-        return pointTalkings[index].position;
+    
+    #region =======================Data Control=============================
+    public override void LoadFromSaveData(BaseRoomSetting<HouseModelType> saveRoom)
+    {
+        base.LoadFromSaveData(saveRoom);
+        for (int i = 0; i < roomSetting.modelPositions.Count; i++)
+        {
+            ModelPosition<HouseModelType> model = roomSetting.modelPositions[i];
+            if (model.type == HouseModelType.House_Bed)
+                bedInRoom = roomSetting.modelPositions[i].rootObject.GetChild(0).GetComponent<Bed>();
+            if (model.type == HouseModelType.House_Sofa)
+                if (roomSetting.modelPositions[i].rootObject.childCount > 0)
+                    sofaInRoom = roomSetting.modelPositions[i].rootObject.GetChild(0).GetComponent<Sofa>();
+        }
+    }
+    public override void LoadAffterUpgrade(Transform modelUPgrade, Transform rootTransform, int modelIndex)
+    {
+        if (rootTransform.childCount > 0)
+            Destroy(rootTransform.GetChild(0).gameObject);
+        Transform newModelTransform = Instantiate(modelUPgrade);
+        newModelTransform.SetParent(rootTransform);
+        newModelTransform.SetAsFirstSibling();
+        newModelTransform.localPosition = Vector3.zero;
+        newModelTransform.localEulerAngles = Vector3.zero;
+        newModelTransform.localScale = new Vector3(1, 1, 1);
+        if (roomSetting.modelPositions[modelIndex].type == HouseModelType.House_Sofa)
+            sofaInRoom = newModelTransform.gameObject.GetComponent<Sofa>();
+        if (roomSetting.modelPositions[modelIndex].type == HouseModelType.House_Bed)
+            bedInRoom = newModelTransform.gameObject.GetComponent<Bed>();
+    }
+    public void ChangeState(HouseRoomState houseRoomState) { state = houseRoomState; }
+    public Worker GetWorker()
+    {
+        foreach (Worker worker in workers)
+        {
+            if (worker.able)
+            {
+                worker.able = false;
+                return worker;
+            }
+        }
+        return null;
+    }
+    public void ResetBed() { bedInRoom.ResetBed(); }
+    void InstanceWorker()
+    {
+        for (int i = 0; i < currentAmountWorker; i++)
+        {
+            Worker workerNew = Instantiate(workerPrefab, pointOpenDoor.position, Quaternion.identity).GetComponent<Worker>();
+            workers.Add(workerNew);
+            workerNew.ChangeHouse(this);
+            int staffID = ProfileManager.instance.playerData.GetStaffID(i, StaffType.Worker);
+            if (staffID != -1)
+            {
+                workerNew.staffSetting.staffID = staffID;
+                workerNew.OnLoadStaff();
+                Debug.Log("Load Worker ID:" + staffID + " Data");
+            }
+            else
+            {
+                ProfileManager.instance.playerData.AddStaffID(StaffType.Worker);
+                workerNew.staffSetting.staffID = GameManager.instance.staffCount;
+                ProfileManager.instance.playerData.SaveStaffData<WorkerModelType>(workerNew.staffSetting);
+                workerNew.OnLoadStaff();
+                Debug.Log("Create Worker ID:" + workerNew.staffSetting.staffID + " Data");
+            }
+            GameManager.instance.staffCount++;
+        }
+        ProfileManager.instance.playerData.SaveData();
+    }
+    public Vector3 GetSleepPoint() { return bedInRoom.GetSleepPoint(); }
+    public Vector3 GetPointTalking(int index) { return pointTalkings[index].position; }
+    public Vector3 GetPointSofar() { return sofaInRoom.GetPointSeatDown(); }
+    public Vector3 GetOtherPoint()
+    {
+        if (currentPointTalkIndex == 1)
+            return pointTalkings[1].position;
+        else return pointTalkings[0].position;
+    }
+    public Vector3 GetRootTransform(HouseModelType modelType)
+    {
+        for (int i = 0; i < roomSetting.modelPositions.Count; i++)
+        {
+            if (roomSetting.modelPositions[i].type == modelType)
+                return roomSetting.modelPositions[i].rootObject.position;
+        }
+        return Vector3.zero;
     }
     public int GetCurrentPointIndex() { return currentPointTalkIndex; }
+    public void SetCurrentPointIndex(int value) { currentPointTalkIndex = value; }
     public void IncreaseCurrentPointIndex() { currentPointTalkIndex++; }
+    public void SetSofaPoint(bool value) { sofaInRoom.SetSofaAble(value); }
+    #endregion
 }
 public class HouseIdle : State<House> {
     private static HouseIdle m_Instance;

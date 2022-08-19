@@ -9,6 +9,17 @@ public class VehicleBase : MonoBehaviour
     public StateMachine<VehicleBase> stateMachine { get { return m_stateMachine; } }
     protected StateMachine<VehicleBase> m_stateMachine;
     public Animator anim;
+    public VehicleState vehicleState;
+    VehicleState currentState;
+    public NavMeshAgent agent;
+    public NavMeshObstacle obstacle;
+    public Vector3 targetToMove;
+    public CharacterController myCharactor;
+    public bool able = true;
+    public AnimationCurve rotageToRightWay;
+    public float timeRotage = 0f;
+    public Quaternion rotageTo;
+    public Quaternion rotageFrom;
     public virtual void Awake()
     {
         m_stateMachine = new StateMachine<VehicleBase>(this);
@@ -16,10 +27,6 @@ public class VehicleBase : MonoBehaviour
         m_stateMachine.SetcurrentState(VehicleIdle.instance);
         anim = GetComponent<Animator>();
     }
-    public VehicleState vehicleState;
-    VehicleState currentState;
-    public NavMeshAgent agent;
-    public NavMeshObstacle obstacle;
     public virtual void Update() {
         stateMachine.Update();
         switch (vehicleState)
@@ -70,23 +77,9 @@ public class VehicleBase : MonoBehaviour
                 break;
         }
     }
-
-    public Vector3 targetToMove;
-    public CharacterController myCharactor;
-    public bool able = true;
-
-    public AnimationCurve rotageToRightWay;
-    public float timeRotage = 0f;
-    public Quaternion rotageTo;
-    public Quaternion rotageFrom;
-    public virtual void IdleEnter() {
-       
-    }
+    public virtual void IdleEnter() { }
     public virtual void IdleExecute() { }
-    public virtual void IdleEnd() {
-        
-    }
-    
+    public virtual void IdleEnd() { }
     public virtual void MoveEnter() { }
     public virtual void MoveExecute() { }
     public virtual void MoveEnd() { }
@@ -102,8 +95,10 @@ public class VehicleBase : MonoBehaviour
     public virtual void TakeOffEnter() { }
     public virtual void TakeOffExecute() { }
     public virtual void TakeOffEnd() { }
+    public virtual void OpenWindownEnter() { }
+    public virtual void OpenWindownExecute() { }
+    public virtual void OpenWindownEnd() { }
     #endregion
-
     #region CarryVehicle
     public virtual void RotageEnter() { }
     public virtual void RotageExecute() { }
@@ -245,5 +240,28 @@ public class VehicleTakeOff : State<VehicleBase> {
     public override void End(VehicleBase go)
     {
         go.TakeOffEnd();
+    }
+}
+public class VehicleWindownOpen : State<VehicleBase> {
+    private static VehicleWindownOpen m_Instance;
+    public static VehicleWindownOpen instance
+    {
+        get {
+            if (m_Instance == null)
+                m_Instance = new VehicleWindownOpen();
+            return m_Instance;
+        }
+    }
+    public override void Enter(VehicleBase go)
+    {
+        go.OpenWindownEnter();
+    }
+    public override void Execute(VehicleBase go)
+    {
+        go.OpenWindownExecute();
+    }
+    public override void End(VehicleBase go)
+    {
+        go.OpenWindownEnd();
     }
 }

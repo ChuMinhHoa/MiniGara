@@ -128,6 +128,7 @@ public class StaffBase<T> : MonoBehaviour
     public virtual void StaffIdleExecute() { }
     public virtual void StaffIdleEnd() { }
     public virtual void StaffMoveEnter() {
+        agent.enabled = true;
         agent.isStopped = false;
         agent.SetDestination(target);
         if (work)

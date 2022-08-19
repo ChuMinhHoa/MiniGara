@@ -4,16 +4,16 @@ using UnityEngine;
 using Cinemachine;
 public class CameraManager : MonoBehaviour
 {
-    public Camera myMainCamera;
     [SerializeField] Transform cameraRig;
+    public Camera myMainCamera;
     public AnimationCurve cameraCurve;
+    public Quaternion defaultRotage;
+    public float speed;
+    Quaternion targetRotage, startRotage;
     Vector3 targetPos, startPos;
     Vector3 lastPosBeforeTouchHouse;
     Vector3 pointStarDrag;
     Vector3 mouseDrag;
-    public Quaternion defaultRotage;
-    Quaternion targetRotage, startRotage;
-    public float speed;
     float timeCurve;
     float fovDefault, fovTarget, fovStart;
     bool touchItem;
