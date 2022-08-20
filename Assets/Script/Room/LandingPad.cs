@@ -29,6 +29,7 @@ public class LandingPad : BaseRoom<LandingPadModelType>
     [Header("OTHER VARIABLE")]
     public float elevatorSpeed;
     public bool able = true;
+    public bool workerOnPosition;
     [SerializeField] Vector3 elevatorOffset;
     VehicleCarry vehicleCarry;
     VehicleBroke vehicleBroke;
@@ -80,16 +81,23 @@ public class LandingPad : BaseRoom<LandingPadModelType>
             return;
         }
         workerAble.work = true;
-        workerAble.ChangeTarget(playerHandlePoint.position, monitorTransform, WorkerWork, CallLanchPad);
+        workerAble.ChangeTarget(GetWorkerPoint().position, GetCusPoint(),TalkingWithCutommer);
         workerAble.ChangeWaitingPoint();
         state = LandingPadState.Idle;
     }
     public void CallWorkerEnd() { }
+    void MoveWorkerToWork() {
+        workerAble.ChangeTarget(playerHandlePoint.position, monitorTransform, WorkerWork, WorkDone);
+        workerOnPosition = false;
+    }
     void WorkerWork() {
         workerAble.ChangeState(StaffState.Work);
     }
-    void CallLanchPad() {
-        state = LandingPadState.LaunchPadCall;
+    void WorkDone() { ChangeState(LandingPadState.LaunchPadCall); }
+    void TalkingWithCutommer() {
+        workerAble.ChangeState(StaffState.Talking);
+        workerAble.actionWorkDone = MoveWorkerToWork;
+        workerOnPosition = true;
     }
     Vector3 elevatorStartPoint;
     public void LaunchPadCallEnter()

@@ -39,6 +39,7 @@ public class StaffBase<T> : MonoBehaviour
     public bool freeTime;
     public bool eatTime;
     protected StateMachine<StaffBase<T>> m_Statemachine;
+    float timeTalking;
     public StateMachine<StaffBase<T>> stateMachine { get { return m_Statemachine; } }
     private void Awake()
     {
@@ -92,6 +93,13 @@ public class StaffBase<T> : MonoBehaviour
                 {
                     currentState = state;
                     stateMachine.ChangeState(StaffFreeTime<T>.instance);
+                }
+                break;
+            case StaffState.Talking:
+                if (currentState != state)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(StaffTalking<T>.instance);
                 }
                 break;
             default:
@@ -266,6 +274,21 @@ public class StaffBase<T> : MonoBehaviour
     public virtual void StaffFreeTimeEnter() { }
     public virtual void StaffFreeTimeExecute() { }
     public virtual void StaffFreeTimeEnd() { }
+
+    #endregion
+    #region Talking
+    public virtual void StaffTalkingEnter() {
+        timeTalking = 0f;
+        anim.Play("Talking"); 
+    }
+    public virtual void StaffTalkingExecute() {
+        timeTalking += Time.deltaTime;
+        if (timeTalking >= 5f)
+        {
+            actionWorkDone();
+        }
+    }
+    public virtual void StaffTalkingEnd() { }
     #endregion
 }
 public class StaffIdle<T> : State<StaffBase<T>>
@@ -414,5 +437,30 @@ public class StaffFreeTime<T> : State<StaffBase<T>>
     public override void End(StaffBase<T> go)
     {
         go.StaffFreeTimeEnd();
+    }
+}
+public class StaffTalking<T> : State<StaffBase<T>>
+{
+    private static StaffTalking<T> m_Instance;
+    public static StaffTalking<T> instance
+    {
+        get
+        {
+            if (m_Instance == null)
+                m_Instance = new StaffTalking<T>();
+            return m_Instance;
+        }
+    }
+    public override void Enter(StaffBase<T> go)
+    {
+        go.StaffTalkingEnter();
+    }
+    public override void Execute(StaffBase<T> go)
+    {
+        go.StaffTalkingExecute();
+    }
+    public override void End(StaffBase<T> go)
+    {
+        go.StaffTalkingEnd();
     }
 }

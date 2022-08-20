@@ -137,9 +137,14 @@ public class VehicleBroke : VehicleBase
     public void PushCharactorDown() {
         myCharactor.transform.parent = null;
         Vector3 point = myLandingPad.pointDropCustomer.position;
-        myCharactor.transform.position = point;
-        Debug.Log(point + " " + myCharactor.transform.position);
-        //myCharactor.ChangeState(CustomerState.Idle);
+        StartCoroutine(ChangePosition(point));
+    }
+    IEnumerator ChangePosition(Vector3 pointChange) {
+        yield return new WaitForSeconds(.5f);
+        myCharactor.ChangeState(CustomerState.Idle);
+        myCharactor.transform.position = pointChange;
+        myCharactor.ChangeRotageTarget(myLandingPad.GetWorkerPoint().position);
+        myCharactor.ChangeTarget(myLandingPad.GetCusPoint().position, null, myCharactor.ChangeState, CustomerState.Talk);
     }
     #endregion
     #region TakeOff

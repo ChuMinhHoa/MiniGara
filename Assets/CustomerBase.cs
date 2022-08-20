@@ -21,6 +21,11 @@ public class CustomerBase : MonoBehaviour
     UnityAction actionDone;
     UnityAction<CustomerState> actionChangeState;
     CustomerState stateChange;
+    float timeRotage = 0f;
+    Quaternion rotageFrom;
+    Quaternion rotageTo;
+    Vector3 targetRotageTo;
+    public AnimationCurve rotageCurve;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -33,6 +38,7 @@ public class CustomerBase : MonoBehaviour
         }
     }
     public virtual void Update() {
+        stateMachine.Update();
         switch (state)
         {
             case CustomerState.OnVehicle:
@@ -63,6 +69,13 @@ public class CustomerBase : MonoBehaviour
                     stateMachine.ChangeState(CustomerTalk.instance);
                 }
                 break;
+            case CustomerState.Rotage:
+                if (state != currentState)
+                {
+                    currentState = state;
+                    stateMachine.ChangeState(CustomerRotage.instance);
+                }
+                break;
             default:
                 break;
         }
@@ -83,28 +96,62 @@ public class CustomerBase : MonoBehaviour
         agent.enabled = true;
         agent.isStopped = false;
         agent.SetDestination(target);
+        agent.speed = .3f;
     }
     public virtual void CustomerMoveExecute() {
         if (IsFinishMoveOnNavemesh())
         {
             agent.isStopped = true;
-            if (actionDone != null)
-                actionDone();
-            if (actionChangeState != null)
-                actionChangeState(CustomerState.Idle);
+            ChangeState(CustomerState.Rotage);
         }
     }
     public virtual void CustomerMoveEnd() { }
     public virtual void CustomerTalkingEnter() { anim.Play("Talking"); }
     public virtual void CustomerTalkingExecute() { }
     public virtual void CustomerTalkingEnd() { }
+    public virtual void CustomerRotageEnter() {
+        timeRotage = 0;
+        rotageFrom = transform.rotation;
+        Vector3 transFormNow = transform.position;
+        transFormNow.y = 0;
+        Vector3 targetXZ = targetRotageTo;
+        targetXZ.y = 0;
+        rotageTo = Quaternion.LookRotation((targetXZ - transFormNow), Vector3.up);
+    }
+    public virtual void CustomerRotageExecute() {
+        if (timeRotage <= rotageCurve.keys[rotageCurve.length - 1].time)
+        {
+            transform.rotation = Quaternion.Slerp(rotageFrom, rotageTo, rotageCurve.Evaluate(timeRotage));
+            timeRotage += Time.deltaTime;
+            return;
+        }
+        
+        if (actionDone != null)
+        {
+            actionDone();
+            return;
+        }
+        if (actionChangeState != null)
+        {
+            actionChangeState(stateChange);
+            return;
+        }
+        ChangeState(CustomerState.Idle);
+    }
+    public virtual void CustomerRotageEnd() { }
     public void ChangeState(CustomerState stateChange) { state = stateChange; }
-    public void ChangeTarget(Vector3 targetChange, UnityAction actionDoneChange = null, UnityAction<CustomerState> actionChangeStateChange = null, CustomerState state = CustomerState.Idle) { 
+    public void ChangeTarget(Vector3 targetChange, 
+        UnityAction actionDoneChange = null, 
+        UnityAction<CustomerState> actionChangeStateChange = null, 
+        CustomerState state = CustomerState.Idle) 
+    { 
         target = targetChange; 
         actionDone = actionDoneChange;
         actionChangeState = actionChangeStateChange;
         stateChange = state;
+        ChangeState(CustomerState.Move);
     }
+    public void ChangeRotageTarget(Vector3 pointChange) { targetRotageTo = pointChange; }
     public bool IsFinishMoveOnNavemesh()
     {
         if (!agent.isActiveAndEnabled)
@@ -218,5 +265,30 @@ public class CustomerTalk : State<CustomerBase>
     public override void End(CustomerBase go)
     {
         go.CustomerTalkingEnd();
+    }
+}
+public class CustomerRotage : State<CustomerBase>
+{
+    private static CustomerRotage m_Instance;
+    public static CustomerRotage instance
+    {
+        get
+        {
+            if (m_Instance == null)
+                m_Instance = new CustomerRotage();
+            return m_Instance;
+        }
+    }
+    public override void Enter(CustomerBase go)
+    {
+        go.CustomerRotageEnter();
+    }
+    public override void Execute(CustomerBase go)
+    {
+        go.CustomerRotageExecute();
+    }
+    public override void End(CustomerBase go)
+    {
+        go.CustomerRotageEnd();
     }
 }

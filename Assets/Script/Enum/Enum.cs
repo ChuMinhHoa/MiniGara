@@ -2,7 +2,8 @@ public enum CustomerState {
     OnVehicle,
     Idle,
     Move,
-    Talk
+    Talk,
+    Rotage
 }
 public enum VehicleType {
     HoverCraft
@@ -57,7 +58,8 @@ public enum StaffState {
     Work,
     Rotage,
     Sleep,
-    FreeTime
+    FreeTime,
+    Talking
 }
 public enum TakeOffRoomState { 
     Idle,
